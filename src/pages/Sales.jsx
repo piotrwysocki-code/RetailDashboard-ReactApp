@@ -58,7 +58,7 @@ function Sales() {
         <div className="bg-sky-50 md:m-10 mt-24 p-2 md:p-10 bg-t rounded-xl drop-shadow-md">
           <h1 className="m-6 text-4xl tracking-wider">Sales</h1>
           <div className="bg-sky-100 rounded-xl p-5 flex flex-col gap-5">
-            <div className="container flex flex-col xl:flex-row gap-5">
+            <div className="container flex flex-col lg:flex-row gap-5">
               <div className="container bg-slate-100 rounded-lg p-5 drop-shadow-md xl:w-1/2">
                 <h1 className="text-2xl mb-2">New Sale</h1>
                 <form className="container flex flex-col gap-2 items-start content-center">

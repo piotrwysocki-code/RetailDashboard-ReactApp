@@ -1,9 +1,10 @@
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useContext, useEffect } from 'react';
 import axios from "axios";
-//hey from update
+
 let StateContext = createContext();
   
 export let ContextProvider = ({ children }) => {
+
     let [categories, setCategories] = useState([])
     let [products, setProducts] = useState([])
     let [employees, setEmployees] = useState([])
@@ -18,10 +19,9 @@ export let ContextProvider = ({ children }) => {
                 let count = 0;
                 products.map((temp, index)=>{
                     count = temp.categoryId === item.categoryId ? count +=1 : count += 0;
-                    return count;
+                    // console.log(count);
                 })
-                item.products = count; 
-                return item;
+                item.products = count;
             })
             setCategories([...res.data])
             return true;
@@ -37,7 +37,6 @@ export let ContextProvider = ({ children }) => {
         await axios.get("http://localhost:8080/departments").then(res => {
             res.data.map((item, index)=>{
                 item.itemKey = index + '_' + item.deptId;
-                return item;
             })
             console.log(res.data);
 
@@ -57,8 +56,6 @@ export let ContextProvider = ({ children }) => {
         await axios.get("http://localhost:8080/employees").then(res => {
             res.data.map((item, index)=>{
                 item.itemKey = index + '_' + item.employeeId;
-                return item;
-
             })
             console.log(res.data);
             setEmployees([...res.data])
@@ -80,9 +77,7 @@ export let ContextProvider = ({ children }) => {
                     if(temp.categoryId === item.categoryId){
                         item.category = temp.categoryName;
                     }
-                    return temp;
                 })
-                return item;
             })
             setProducts([...res.data])
             return true;
@@ -99,8 +94,6 @@ export let ContextProvider = ({ children }) => {
         await axios.get("http://localhost:8080/salesprods").then(res => {
             res.data.map((item, index)=>{
                 item.itemKey = index + '_' + item.productId + item.saleId;
-                return item;
-
             })
             setSalesProducts([...res.data])
             return true;
@@ -118,7 +111,6 @@ export let ContextProvider = ({ children }) => {
             res.data.map((item, index)=>{
                 item.itemKey = index + '_' + item.saleId;
                 item.saleDate = item.saleDate.slice(0, -9);
-                return item;
 
             })
             setSales([...res.data])

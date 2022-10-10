@@ -12,7 +12,6 @@ function SearchGrid(props) {
   let [editVal, setEditVal] = useState("");
   let [newItem, setNewItem] = useState({});
 
-
   useEffect(() => {
     console.log(editVal);
     console.log("edit item", editItem);
@@ -24,8 +23,7 @@ function SearchGrid(props) {
     console.log(selected);
   }, [selected]);
 
-  let searchBtnClick = async () => {
-  }
+  let searchBtnClick = async () => {};
 
   let deleteBtnClicked = async () => {
     console.log("Sending selected items: ", selected);
@@ -107,16 +105,16 @@ function SearchGrid(props) {
   };
 
   let searchKeyChange = (e) => {
-   /* setFilter((filter) => {
+    /* setFilter((filter) => {
       return({
         ...filter,
         key: e.target.value
       });
-    }); */  
+    }); */
   };
 
   let searchTermChange = (e) => {
-  /*  setFilter((filter) => {
+    /*  setFilter((filter) => {
       return({
         ...filter,
         val: e.target.value
@@ -240,17 +238,19 @@ function SearchGrid(props) {
                             </td>
                           );
                         } else {
-                          return (
-                            <td
-                              className="p-4"
-                              onClick={() => {
-                                editItemClick(item, key);
-                              }}
-                              key={key}
-                            >
-                              {JSON.stringify(item[key]) || item[key]}
-                            </td>
-                          );
+                          if (key !== "itemKey") {
+                            return (
+                              <td
+                                className="p-4"
+                                onClick={() => {
+                                  editItemClick(item, key);
+                                }}
+                                key={key}
+                              >
+                                {JSON.stringify(item[key]) || item[key]}
+                              </td>
+                            );
+                          }
                         }
                       })}
                 </tr>
