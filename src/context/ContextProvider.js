@@ -1,5 +1,6 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import axios from "axios";
+import { FiLayers } from 'react-icons/fi';
 
 let StateContext = createContext();
   
@@ -12,14 +13,13 @@ export let ContextProvider = ({ children }) => {
     let [departments, setDepartments] = useState([])
     let [salesProducts, setSalesProducts] = useState([]);
 
-    let refreshCategories = async () => {
+ /*   let refreshCategories = async () => {
         await axios.get("http://localhost:8080/categories").then(res => {
             res.data.map((item, index)=>{
                 item.itemKey = index + '_' + item.categoryId;
                 let count = 0;
                 products.map((temp, index)=>{
                     count = temp.categoryId === item.categoryId ? count +=1 : count += 0;
-                    // console.log(count);
                 })
                 item.products = count;
             })
@@ -30,10 +30,61 @@ export let ContextProvider = ({ children }) => {
             return null;
         })
         return false;
-        
+    } */
+    
+    let refreshCategories = async (filter) => {
+        if(filter && filter.key !== -1 && filter.val !== -1){
+            await axios.get("http://localhost:8080/categories").then(res => {
+                let temp = res.data.filter((item, index)=>{
+                    if(filter.key === 'categoryId' && filter.val){
+                        if(parseFloat(item[filter.key]) === parseFloat(filter.val)){
+                            item.itemKey = index + '_' + item.categoryId;
+                            return item;
+                        }
+                    }else if(item[filter.key].toString().toUpperCase().includes(filter.val.toUpperCase())){
+                        item.itemKey = index + '_' + item.categoryId;
+                        return item;
+                    }
+
+                })
+                temp.map((item, index)=>{
+                    let count = 0;
+                    products.map((x, index)=>{
+                        count = x.categoryId === item.categoryId ? count +=1 : count += 0;
+                    })
+                    item.products = count;
+                })
+                setCategories([...temp])
+                return true;
+
+            }).catch((err)=>{
+                console.log(`${err}`);
+                return null;
+            })
+            return false;
+        }else{
+            await axios.get("http://localhost:8080/categories").then(res => {
+                res.data.map((item, index)=>{
+                    item.itemKey = index + '_' + item.categoryId;
+                    let count = 0;
+                    products.map((x, index)=>{
+                        count = x.categoryId === item.categoryId ? count +=1 : count += 0;
+                    })
+                    
+                    item.products = count;
+                })
+                console.log(res.data);
+                setCategories([...res.data])
+                return true;
+            }).catch((err)=>{
+                console.log(`${err}`);
+                return null;
+            })
+            return false;
+        }
     }
 
-    let refreshDepartments = async () => {
+  /*  let refreshDepartments = async () => {
         await axios.get("http://localhost:8080/departments").then(res => {
             res.data.map((item, index)=>{
                 item.itemKey = index + '_' + item.deptId;
@@ -48,28 +99,97 @@ export let ContextProvider = ({ children }) => {
             return null;
         })
         return false;
-        
+    
+    }*/
 
-    }
-
-    let refreshEmployees = async () => {
-        await axios.get("http://localhost:8080/employees").then(res => {
-            res.data.map((item, index)=>{
-                item.itemKey = index + '_' + item.employeeId;
+    let refreshDepartments = async (filter) => {
+        if(filter && filter.key !== -1 && filter.val !== -1){
+            await axios.get("http://localhost:8080/departments").then(res => {
+                let temp = res.data.filter((item, index)=>{
+                    if(filter.key === 'deptId' && filter.val){
+                        if(parseFloat(item[filter.key]) === parseFloat(filter.val)){
+                            item.itemKey = index + '_' + item.deptId;
+                            return item;
+                        }
+                    }else if(item[filter.key].toString().toUpperCase().includes(filter.val.toUpperCase())){
+                        item.itemKey = index + '_' + item.deptId;
+                        return item;
+                    }
+                })
+                console.log(temp);
+                setDepartments([...temp])
+                return true;
+            }).catch((err)=>{
+                console.log(`${err}`);
+                return null;
             })
-            console.log(res.data);
-            setEmployees([...res.data])
-            return true;
-        }).catch((err)=>{
-            console.log(`${err}`);
-            return null;
-        })
-        return false;
-        
+            return false;
+        }else{
+            await axios.get("http://localhost:8080/departments").then(res => {
+                res.data.map((item, index)=>{
+                    item.itemKey = index + '_' + item.deptId;
+                })
+                console.log(res.data);
+                setDepartments([...res.data])
+                return true;
+            }).catch((err)=>{
+                console.log(`${err}`);
+                return null;
+            })
+            return false;
+        }
+    }
+
+    let refreshEmployees = async (filter) => {
+        if(filter && filter.key !== -1 && filter.val !== -1){
+            await axios.get("http://localhost:8080/employees").then(res => {
+                let temp = res.data.filter((item, index)=>{
+                    if(filter.key === 'salary' && filter.val){
+                        if(parseFloat(item[filter.key]) === parseFloat(filter.val)){
+                            item.itemKey = index + '_' + item.employeeId;
+                            return item;
+                        }
+                    }else if(filter.key === 'employeeId' && filter.val){
+                        if(parseFloat(item[filter.key]) === parseFloat(filter.val)){
+                            item.itemKey = index + '_' + item.employeeId;
+                            return item;
+                        }
+                    }else if(filter.key === 'deptId' && filter.val){
+                        if(parseFloat(item[filter.key]) === parseFloat(filter.val)){
+                            item.itemKey = index + '_' + item.employeeId;
+                            return item;
+                        }
+                    }else if(item[filter.key].toString().toUpperCase().includes(filter.val.toUpperCase())){
+                        item.itemKey = index + '_' + item.employeeId;
+                        return item;
+                    }
+                })
+                console.log(temp);
+                setEmployees([...temp])
+                return true;
+            }).catch((err)=>{
+                console.log(`${err}`);
+                return null;
+            })
+            return false;
+        }else{
+            await axios.get("http://localhost:8080/employees").then(res => {
+                res.data.map((item, index)=>{
+                    item.itemKey = index + '_' + item.employeeId;
+                })
+                console.log(res.data);
+                setEmployees([...res.data])
+                return true;
+            }).catch((err)=>{
+                console.log(`${err}`);
+                return null;
+            })
+            return false;
+        }
     }
 
 
-    let refreshProducts = async () => {
+   /* let refreshProducts = async () => {
         await axios.get("http://localhost:8080/products").then(res => {
             res.data.map((item, index)=>{
                 item.itemKey = index + '_' + item.productId;
@@ -87,6 +207,86 @@ export let ContextProvider = ({ children }) => {
         })
         return false;
         
+    } */
+
+        
+    let refreshProducts = async (filter) => {
+        if(filter && filter.key !== -1 && filter.val !== -1){
+            await axios.get("http://localhost:8080/products").then(res => {
+                let temp = res.data.filter((item, index)=>{
+                    if(filter.key === 'productId' && filter.val){
+                        if(parseFloat(item[filter.key]) === parseFloat(filter.val)){
+                            item.itemKey = index + '_' + item.productId;
+                            categories.map((temp, index)=>{
+                                if(temp.categoryId === item.categoryId){
+                                    item.category = temp.categoryName;
+                                }
+                            })
+                            return item;
+
+                        }
+                    }else if(filter.key === 'price' && filter.val){
+                        if(parseFloat(item[filter.key]) === parseFloat(filter.val)){
+                            item.itemKey = index + '_' + item.productId;
+                            categories.map((temp, index)=>{
+                                if(temp.categoryId === item.categoryId){
+                                    item.category = temp.categoryName;
+                                }
+                            })
+                            return item;
+
+                        }
+                    }else if(filter.key === 'categoryId' && filter.val){
+                        if(parseFloat(item[filter.key]) === parseFloat(filter.val)){
+                            item.itemKey = index + '_' + item.productId;
+                            categories.map((temp, index)=>{
+                                if(temp.categoryId === item.categoryId){
+                                    item.category = temp.categoryName;
+                                }
+                            })
+                            return item;
+
+                        }
+                    }else if(item[filter.key].toString().toUpperCase().includes(filter.val.toUpperCase())){
+                        item.itemKey = index + '_' + item.productId;
+                        categories.map((temp, index)=>{
+                            if(temp.categoryId === item.categoryId){
+                                item.category = temp.categoryName;
+                            }
+                        })
+                        return item;
+
+                    }
+
+                })
+                console.log(temp);
+                setProducts([...temp])
+                return true;
+            }).catch((err)=>{
+                console.log(`${err}`);
+                return null;
+            })
+            return false;
+        }else{
+            await axios.get("http://localhost:8080/products").then(res => {
+                res.data.map((item, index)=>{
+                    item.itemKey = index + '_' + item.productId;
+                    categories.map((temp, index)=>{
+                        if(temp.categoryId === item.categoryId){
+                            item.category = temp.categoryName;
+                        }
+                    })
+                    return item;
+                })
+                console.log(res.data);
+                setProducts([...res.data])
+                return true;
+            }).catch((err)=>{
+                console.log(`${err}`);
+                return null;
+            })
+            return false;
+        }
     }
 
     let refreshSalesProducts = async () => {

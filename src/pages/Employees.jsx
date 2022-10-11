@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useStateContext } from "../context/ContextProvider";
 import { FiSearch, FiTrash2 } from "react-icons/fi";
 import SearchGrid from "../components/SearchGrid";
@@ -9,18 +9,64 @@ function Employees() {
   const { employees, departments, refreshEmployees, refreshDepartments } =
     useStateContext();
 
-  let [name, setName] = useState("");
+  let initialFilter = {
+    key: -1,
+    val: -1,
+  };
 
+  let [name, setName] = useState("");
+  let [empFilter, setEmpFilter] = useState(initialFilter);
+  let [deptFilter, setDeptFilter] = useState(initialFilter);
   let [newEmp, setNewEmp] = useState({});
+
+  let empSearchOps = useRef(-1);
+  let deptSearchOps = useRef(-1);
 
   useEffect(() => {
     refreshEmployees();
     refreshDepartments();
   }, []);
 
+  useEffect(() => {
+    if (departments[0]) {
+      deptSearchOps.current = [];
+      Object.keys(departments[0] || "").map((key, index) => {
+        if (key !== "itemKey") {
+          deptSearchOps.current.push(key);
+        }
+      });
+    }
+  }, [departments]);
+
+  useEffect(() => {
+    if (employees[0]) {
+      empSearchOps.current = [];
+      Object.keys(employees[0] || "").map((key, index) => {
+        if (key !== "itemKey") {
+          empSearchOps.current.push(key);
+        }
+      });
+    }
+  }, [employees]);
+
+  useEffect(() => {
+    console.log(empFilter);
+    refreshEmployees(empFilter);
+  }, [empFilter]);
+
+  useEffect(() => {
+    console.log(deptFilter);
+    refreshDepartments(deptFilter);
+  }, [deptFilter]);
+
   let handleChange = (event) => {
     setName(event.target.value);
     console.log(name);
+  };
+  
+  let handleEmpChange = async (e) => {
+    newEmp[e.target.name] = e.target.value;
+    console.log(newEmp);
   };
 
   let handleSubmitDept = async (event) => {
@@ -32,7 +78,7 @@ function Employees() {
       .then(
         await ((response) => {
           console.log("test", response);
-          refreshDepartments();
+          refreshDepartments(deptFilter);
         })
       )
       .catch((error) => {
@@ -46,16 +92,51 @@ function Employees() {
       .post("http://localhost:8080/add_employee", newEmp)
       .then((response) => {
         console.log(response);
-        refreshEmployees();
+        refreshEmployees(empFilter);
       })
       .catch((error) => {
         console.log(error);
       });
   };
 
-  let handleEmpChange = async (e) => {
-    newEmp[e.target.name] = e.target.value;
-    console.log(newEmp);
+  let searchBtnClick = async (x) => {
+    if (x === 0) {
+      refreshDepartments(deptFilter);
+      console.log(deptFilter);
+    } else if (x === 1) {
+      refreshEmployees(empFilter);
+      console.log(empFilter);
+    }
+  };
+
+  let searchKeyChange = (e) => {
+    console.log(e.target.name + ": " + e.target.value);
+    if (e.target.name === "empKey") {
+      setEmpFilter({
+        ...empFilter,
+        key: e.target.value,
+      });
+    } else if (e.target.name === "deptKey") {
+      setDeptFilter({
+        ...deptFilter,
+        key: e.target.value,
+      });
+    }
+  };
+
+  let searchTermChange = (e) => {
+    console.log(e.target.name + ": " + e.target.value);
+    if (e.target.name === "empVal") {
+      setEmpFilter({
+        ...empFilter,
+        val: e.target.value,
+      });
+    } else if (e.target.name === "deptVal") {
+      setDeptFilter({
+        ...deptFilter,
+        val: e.target.value,
+      });
+    }
   };
 
   return (
@@ -176,7 +257,48 @@ function Employees() {
                     </button>
                   </div>
                 </div>
-                <div className="">
+
+                <div className="container text-start p-2 bg-slate-100 rounded-xl drop-shadow-md">
+                  <div className="container flex flex-row flex-wrap m-3 gap-5">
+                    <div className="">
+                      <h1 className="text-lg">Search Departments</h1>
+                    </div>
+                    <div className="flex flex-row no-wrap gap-2 justify-end">
+                      <div className="flex flex-row gap-2 content-center">
+                        <select
+                          name="deptKey"
+                          onChange={searchKeyChange}
+                          className="rounded-xl"
+                        >
+                          <option>key</option>
+                          {deptSearchOps.current !== -1 &&
+                            deptSearchOps.current.map((key, index) => {
+                              if (key !== "itemKey") {
+                                return (
+                                  <option value={key} key={key}>
+                                    {key}
+                                  </option>
+                                );
+                              }
+                            })}
+                        </select>
+                        <input
+                          className="rounded-lg p-1"
+                          type="text"
+                          name="deptVal"
+                          onChange={searchTermChange}
+                        ></input>
+                        <button
+                          className="bg-sky-200 rounded-lg p-1 pl-2 pr-2 hover:bg-sky-300"
+                          onClick={() => {
+                            searchBtnClick(0);
+                          }}
+                        >
+                          <FiSearch />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                   <SearchGrid
                     data={departments}
                     title="Departments"
@@ -185,11 +307,54 @@ function Employees() {
                 </div>
               </div>
             </div>
-            <SearchGrid
-              data={employees}
-              title="Employees"
-              urlSuffix="employee"
-            />
+
+            <div className="container text-start p-2 bg-slate-100 rounded-xl drop-shadow-md">
+              <div className="container flex flex-row flex-wrap m-3 lg:gap-5">
+                <div className="">
+                  <h1 className="text-lg">Search Employees</h1>
+                </div>
+                <div className="flex flex-row no-wrap gap-2 justify-end">
+                  <div className="flex flex-row gap-2 content-center">
+                    <select
+                      name="empKey"
+                      onChange={searchKeyChange}
+                      className="rounded-xl"
+                    >
+                      <option>key</option>
+                      {empSearchOps.current !== -1 &&
+                        empSearchOps.current.map((key, index) => {
+                          if (key !== "itemKey") {
+                            return (
+                              <option value={key} key={key}>
+                                {key}
+                              </option>
+                            );
+                          }
+                        })}
+                    </select>
+                    <input
+                      className="rounded-lg p-1"
+                      type="text"
+                      name="empVal"
+                      onChange={searchTermChange}
+                    ></input>
+                    <button
+                      className="bg-sky-200 rounded-lg p-1 pl-2 pr-2 hover:bg-sky-300"
+                      onClick={() => {
+                        searchBtnClick(1);
+                      }}
+                    >
+                      <FiSearch />
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <SearchGrid
+                data={employees}
+                title="Employees"
+                urlSuffix="employee"
+              />
+            </div>
           </div>
         </div>
       </div>

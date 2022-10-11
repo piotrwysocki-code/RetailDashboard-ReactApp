@@ -23,8 +23,6 @@ function SearchGrid(props) {
     console.log(selected);
   }, [selected]);
 
-  let searchBtnClick = async () => {};
-
   let deleteBtnClicked = async () => {
     console.log("Sending selected items: ", selected);
     axios({
@@ -104,59 +102,9 @@ function SearchGrid(props) {
       });
   };
 
-  let searchKeyChange = (e) => {
-    /* setFilter((filter) => {
-      return({
-        ...filter,
-        key: e.target.value
-      });
-    }); */
-  };
-
-  let searchTermChange = (e) => {
-    /*  setFilter((filter) => {
-      return({
-        ...filter,
-        val: e.target.value
-      });
-    });*/
-  };
 
   return (
-    <div className="container text-start p-5 bg-slate-100 rounded-xl drop-shadow-md">
-      <div className="container flex flex-row flex-wrap m-3 lg:gap-5">
-        <div className="">
-          <h1 className="text-lg">Search {props.title}</h1>
-        </div>
-        <div className="flex flex-row no-wrap gap-2 justify-end">
-          <div className="flex flex-row gap-2 content-center">
-            <input
-              className="rounded-lg p-1"
-              type="text"
-              onChange={searchTermChange}
-            ></input>
-            <button
-              className="bg-sky-200 rounded-lg p-1 pl-2 pr-2 hover:bg-sky-300"
-              onClick={searchBtnClick}
-            >
-              <FiSearch />
-            </button>
-            <select onChange={searchKeyChange} className="rounded-xl">
-              <option>search by</option>
-              {props.data &&
-                Object.keys(props.data[0] || "").map((key, index) => {
-                  if (key !== "itemKey") {
-                    return (
-                      <option value={key} key={key}>
-                        {key}
-                      </option>
-                    );
-                  }
-                })}
-            </select>
-          </div>
-        </div>
-      </div>
+    <div className="container text-start p-5 bg-slate-100 rounded-xl ">
       <div className="overflow-scroll max-h-screen lg:max-h-96">
         <table className="table-auto m-2 w-full">
           <tr className="sticky top-0 bg-slate-100">
