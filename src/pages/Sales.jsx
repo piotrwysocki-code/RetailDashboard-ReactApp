@@ -227,51 +227,48 @@ function Sales() {
                 </button>
               </div>
               <div className="container flex flex-col gap-5 w-full xl:w-1/2">
-              <div className="container text-start p-2 bg-slate-100 rounded-xl drop-shadow-md">
-              <div className="container flex flex-row flex-wrap m-3 gap-5">
-                <div className="">
-                  <h1 className="text-lg">Search Sold Products</h1>
-                </div>
-                <div className="flex flex-row no-wrap gap-2 justify-end">
-                  <div className="flex flex-row gap-2 content-center">
-                    <select
-                      name="salesProdKey"
-                      onChange={searchKeyChange}
-                      className="rounded-xl"
-                    >
-                      <option>key</option>
-                      {salesProdSearchOps.current !== -1 &&
-                        salesProdSearchOps.current.map((key, index) => {
-                          if (key !== "itemKey") {
-                            return (
-                              <option value={key} key={key}>
-                                {key}
-                              </option>
-                            );
-                          }
-                        })}
-                    </select>
-                    <input
-                      className="rounded-lg p-1"
-                      type="text"
-                      name="salesProdVal"
-                      onChange={searchTermChange}
-                    ></input>
-                    <button
-                      className="bg-sky-200 rounded-lg p-1 pl-2 pr-2 hover:bg-sky-300"
-                      onClick={() => {
-                        searchBtnClick(0);
-                      }}
-                    >
-                      <FiSearch />
-                    </button>
+                <div className="container text-start p-2 bg-slate-100 rounded-xl drop-shadow-md">
+                  <div className="container flex flex-row flex-wrap m-3 gap-5">
+                    <div className="">
+                      <h1 className="text-lg">Search Sold Products</h1>
+                    </div>
+                    <div className="flex flex-row no-wrap gap-2 justify-end">
+                      <div className="flex flex-row gap-2 content-center">
+                        <select
+                          name="salesProdKey"
+                          onChange={searchKeyChange}
+                          className="rounded-xl"
+                        >
+                          <option>key</option>
+                          {salesProdSearchOps.current !== -1 &&
+                            salesProdSearchOps.current.map((key, index) => {
+                              if (key !== "itemKey") {
+                                return (
+                                  <option value={key} key={key}>
+                                    {key}
+                                  </option>
+                                );
+                              }
+                            })}
+                        </select>
+                        <input
+                          className="rounded-lg p-1"
+                          type="text"
+                          name="salesProdVal"
+                          onChange={searchTermChange}
+                        ></input>
+                        <button
+                          className="bg-sky-200 rounded-lg p-1 pl-2 pr-2 hover:bg-sky-300"
+                          onClick={() => {
+                            searchBtnClick(0);
+                          }}
+                        >
+                          <FiSearch />
+                        </button>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-                  <SearchGrid
-                    data={salesProducts}
-                    urlSuffix="salesprod"
-                  />
+                  <SearchGrid data={salesProducts} urlSuffix="salesprod" />
                 </div>
               </div>
             </div>

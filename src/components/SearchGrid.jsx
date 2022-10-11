@@ -127,7 +127,7 @@ function SearchGrid(props) {
                 }
               })}
           </tr>
-          {props.data &&
+          {props.data ?
             props.data.map((item, index) => {
               return (
                 <tr
@@ -203,7 +203,9 @@ function SearchGrid(props) {
                       })}
                 </tr>
               );
-            })}
+            })
+            : <h1>Loading</h1>
+          }
         </table>
       </div>
     </div>

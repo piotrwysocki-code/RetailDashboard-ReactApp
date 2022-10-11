@@ -69,6 +69,7 @@ function Employees() {
       ...newEmp,
       [e.target.name]: e.target.value,
     });
+
     console.log(newEmp);
   };
 
@@ -231,7 +232,7 @@ function Employees() {
                     onChange={handleEmpChange}
                   ></input>
                 </form>
-                <div className="flex flex-col justify-end gap-5 lg:flex-row content-centerd m-3">
+                <div className="flex flex-col justify-between items-center gap-5 lg:flex-row content-center m-3">
                   <button
                     className="rounded-xl bg-sky-200 hover:bg-sky-300 p-1 pl-2 pr-2 mt-2"
                     onClick={handleSubmitEmp}
