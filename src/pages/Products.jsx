@@ -66,7 +66,10 @@ function Products() {
   };
 
   let handleProdChange = async (e) => {
-    newProd[e.target.name] = e.target.value;
+    setNewProd({
+      ...newProd,
+      [e.target.name]: e.target.value,
+    });
     console.log(newProd);
   };
 

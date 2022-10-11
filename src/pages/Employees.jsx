@@ -63,13 +63,11 @@ function Employees() {
     setName(event.target.value);
     console.log(name);
   };
-  
-  let handleEmpChange = async (e) => {
-    let name = e.target.name;
 
+  let handleEmpChange = async (e) => {
     setNewEmp({
       ...newEmp,
-      name: e.target.value,
+      [e.target.name]: e.target.value,
     });
     console.log(newEmp);
   };
@@ -163,7 +161,6 @@ function Employees() {
                     className="w-full p-1 rounded-lg"
                     onChange={handleEmpChange}
                   ></input>
-                  {newEmp.firstName === null || newEmp.firstName === '' ? <small>Field cannot be empty</small> : ''}
                   <label for="lastName" className=" w-full">
                     Last Name
                   </label>
@@ -304,10 +301,7 @@ function Employees() {
                       </div>
                     </div>
                   </div>
-                  <SearchGrid
-                    data={departments}
-                    urlSuffix="department"
-                  />
+                  <SearchGrid data={departments} urlSuffix="department" />
                 </div>
               </div>
             </div>
@@ -353,10 +347,7 @@ function Employees() {
                   </div>
                 </div>
               </div>
-              <SearchGrid
-                data={employees}
-                urlSuffix="employee"
-              />
+              <SearchGrid data={employees} urlSuffix="employee" />
             </div>
           </div>
         </div>

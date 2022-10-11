@@ -61,17 +61,22 @@ function Sales() {
   }, [salesFilter]);
 
   let handleChangeProds = (e) => {
-    newSaleProd[e.target.name] = e.target.value;
+    setNewSaleProd({
+      ...newSaleProd,
+      [e.target.name]: e.target.value,
+    });
     console.log("new sale prod:", newSaleProd);
   };
 
   let handleChangeSale = async (e) => {
-    newSale[e.target.name] = e.target.value;
+    setNewSale({
+      ...newSale,
+      [e.target.name]: e.target.value,
+    });
     console.log("new sale", newSale);
   };
 
   let handleSubmitSale = async (event) => {
-    newSale["saleId"] = 0;
     axios
       .post("http://localhost:8080/add_sale", newSale)
       .then((response) => {
