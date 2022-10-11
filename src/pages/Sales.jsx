@@ -1,20 +1,64 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useStateContext } from "../context/ContextProvider";
 import SearchGrid from "../components/SearchGrid";
 import axios from "axios";
 import Navbar from "../components/Navbar";
+import { FiSearch } from "react-icons/fi";
 
 function Sales() {
   const { sales, salesProducts, refreshSales, refreshSalesProducts } =
     useStateContext();
 
+  let initialFilter = {
+    key: -1,
+    val: -1,
+  };
+
   let [newSale, setNewSale] = useState({});
   let [newSaleProd, setNewSaleProd] = useState({});
+
+  let [salesProdFilter, setSalesProdFilter] = useState(initialFilter);
+  let [salesFilter, setSalesFilter] = useState(initialFilter);
+
+  let salesProdSearchOps = useRef(-1);
+  let salesSearchOps = useRef(-1);
 
   useEffect(() => {
     refreshSales();
     refreshSalesProducts();
   }, []);
+
+  useEffect(() => {
+    if (salesProducts[0]) {
+      salesProdSearchOps.current = [];
+      Object.keys(salesProducts[0] || "").map((key, index) => {
+        if (key !== "itemKey") {
+          salesProdSearchOps.current.push(key);
+        }
+      });
+    }
+  }, [salesProducts]);
+
+  useEffect(() => {
+    if (sales[0]) {
+      salesSearchOps.current = [];
+      Object.keys(sales[0] || "").map((key, index) => {
+        if (key !== "itemKey") {
+          salesSearchOps.current.push(key);
+        }
+      });
+    }
+  }, [sales]);
+
+  useEffect(() => {
+    console.log(salesProdFilter);
+    refreshSalesProducts(salesProdFilter);
+  }, [salesProdFilter]);
+
+  useEffect(() => {
+    console.log(salesFilter);
+    refreshSales(salesFilter);
+  }, [salesFilter]);
 
   let handleChangeProds = (e) => {
     newSaleProd[e.target.name] = e.target.value;
@@ -49,6 +93,46 @@ function Sales() {
       .catch((error) => {
         console.log(error);
       });
+  };
+
+  let searchBtnClick = async (x) => {
+    if (x === 0) {
+      refreshSalesProducts(salesProdFilter);
+      console.log(salesProdFilter);
+    } else if (x === 1) {
+      refreshSales(salesFilter);
+      console.log(salesFilter);
+    }
+  };
+
+  let searchKeyChange = (e) => {
+    console.log(e.target.name + ": " + e.target.value);
+    if (e.target.name === "salesProdKey") {
+      setSalesProdFilter({
+        ...salesProdFilter,
+        key: e.target.value,
+      });
+    } else if (e.target.name === "salesKey") {
+      setSalesFilter({
+        ...salesFilter,
+        key: e.target.value,
+      });
+    }
+  };
+
+  let searchTermChange = (e) => {
+    console.log(e.target.name + ": " + e.target.value);
+    if (e.target.name === "salesProdVal") {
+      setSalesProdFilter({
+        ...salesProdFilter,
+        val: e.target.value,
+      });
+    } else if (e.target.name === "salesVal") {
+      setSalesFilter({
+        ...salesFilter,
+        val: e.target.value,
+      });
+    }
   };
 
   return (
@@ -138,16 +222,97 @@ function Sales() {
                 </button>
               </div>
               <div className="container flex flex-col gap-5 w-full xl:w-1/2">
+              <div className="container text-start p-2 bg-slate-100 rounded-xl drop-shadow-md">
+              <div className="container flex flex-row flex-wrap m-3 gap-5">
                 <div className="">
+                  <h1 className="text-lg">Search Sold Products</h1>
+                </div>
+                <div className="flex flex-row no-wrap gap-2 justify-end">
+                  <div className="flex flex-row gap-2 content-center">
+                    <select
+                      name="salesProdKey"
+                      onChange={searchKeyChange}
+                      className="rounded-xl"
+                    >
+                      <option>key</option>
+                      {salesProdSearchOps.current !== -1 &&
+                        salesProdSearchOps.current.map((key, index) => {
+                          if (key !== "itemKey") {
+                            return (
+                              <option value={key} key={key}>
+                                {key}
+                              </option>
+                            );
+                          }
+                        })}
+                    </select>
+                    <input
+                      className="rounded-lg p-1"
+                      type="text"
+                      name="salesProdVal"
+                      onChange={searchTermChange}
+                    ></input>
+                    <button
+                      className="bg-sky-200 rounded-lg p-1 pl-2 pr-2 hover:bg-sky-300"
+                      onClick={() => {
+                        searchBtnClick(0);
+                      }}
+                    >
+                      <FiSearch />
+                    </button>
+                  </div>
+                </div>
+              </div>
                   <SearchGrid
                     data={salesProducts}
-                    title="Sold Products"
                     urlSuffix="salesprod"
                   />
                 </div>
               </div>
             </div>
-            <SearchGrid data={sales} title="Sales" urlSuffix="sale" />
+            <div className="container text-start p-2 bg-slate-100 rounded-xl drop-shadow-md">
+              <div className="container flex flex-row flex-wrap m-3 gap-5">
+                <div className="">
+                  <h1 className="text-lg">Search Sales</h1>
+                </div>
+                <div className="flex flex-row no-wrap gap-2 justify-end">
+                  <div className="flex flex-row gap-2 content-center">
+                    <select
+                      name="salesKey"
+                      onChange={searchKeyChange}
+                      className="rounded-xl"
+                    >
+                      <option>key</option>
+                      {salesSearchOps.current !== -1 &&
+                        salesSearchOps.current.map((key, index) => {
+                          if (key !== "itemKey") {
+                            return (
+                              <option value={key} key={key}>
+                                {key}
+                              </option>
+                            );
+                          }
+                        })}
+                    </select>
+                    <input
+                      className="rounded-lg p-1"
+                      type="text"
+                      name="salesVal"
+                      onChange={searchTermChange}
+                    ></input>
+                    <button
+                      className="bg-sky-200 rounded-lg p-1 pl-2 pr-2 hover:bg-sky-300"
+                      onClick={() => {
+                        searchBtnClick(0);
+                      }}
+                    >
+                      <FiSearch />
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <SearchGrid data={sales} urlSuffix="sale" />
+            </div>
           </div>
         </div>
       </div>

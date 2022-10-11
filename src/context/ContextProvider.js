@@ -223,7 +223,6 @@ export let ContextProvider = ({ children }) => {
                                 }
                             })
                             return item;
-
                         }
                     }else if(filter.key === 'price' && filter.val){
                         if(parseFloat(item[filter.key]) === parseFloat(filter.val)){
@@ -255,7 +254,6 @@ export let ContextProvider = ({ children }) => {
                             }
                         })
                         return item;
-
                     }
 
                 })
@@ -289,7 +287,7 @@ export let ContextProvider = ({ children }) => {
         }
     }
 
-    let refreshSalesProducts = async () => {
+   /* let refreshSalesProducts = async () => {
 
         await axios.get("http://localhost:8080/salesprods").then(res => {
             res.data.map((item, index)=>{
@@ -303,10 +301,59 @@ export let ContextProvider = ({ children }) => {
         })
         return false;
         
+    }*/
+
+    let refreshSalesProducts = async (filter) => {
+        if(filter && filter.key !== -1 && filter.val !== -1){
+            await axios.get("http://localhost:8080/salesprods").then(res => {
+                let temp = res.data.filter((item, index)=>{
+                    if(filter.key === 'saleId' && filter.val){
+                        if(parseFloat(item[filter.key]) === parseFloat(filter.val)){
+                            item.itemKey = index + '_' + item.saleId + '_' + item.productId;
+                            return item;
+                        }
+                    }else if(filter.key === 'productId' && filter.val){
+                        if(parseFloat(item[filter.key]) === parseFloat(filter.val)){
+                            item.itemKey = index + '_' + item.saleId + '_' + item.productId;
+                            return item;
+                        }
+                    }else if(filter.key === 'quantity' && filter.val){
+                        if(parseFloat(item[filter.key]) === parseFloat(filter.val)){
+                            item.itemKey = index + '_' + item.saleId + '_' + item.productId;
+                            return item;
+                        }
+                    }else if(item[filter.key].toString().toUpperCase().includes(filter.val.toUpperCase())){
+                        item.itemKey = index + '_' + item.saleId + '_' + item.productId;
+
+                        return item;
+                    }
+                })
+                console.log(temp);
+                setSalesProducts([...temp])
+                return true;
+            }).catch((err)=>{
+                console.log(`${err}`);
+                return null;
+            })
+            return false;
+        }else{
+            await axios.get("http://localhost:8080/salesprods").then(res => {
+                res.data.map((item, index)=>{
+                    item.itemKey = index + '_' + item.saleId + '_' + item.productId;
+                })
+                console.log(res.data);
+                setSalesProducts([...res.data])
+                return true;
+            }).catch((err)=>{
+                console.log(`${err}`);
+                return null;
+            })
+            return false;
+        }
     }
 
 
-    let refreshSales = async () => {
+ /*   let refreshSales = async () => {
         await axios.get("http://localhost:8080/sales").then(res => {
             res.data.map((item, index)=>{
                 item.itemKey = index + '_' + item.saleId;
@@ -321,6 +368,63 @@ export let ContextProvider = ({ children }) => {
         })
         return false;
 
+    }*/
+
+    let refreshSales = async (filter) => {
+        if(filter && filter.key !== -1 && filter.val !== -1){
+            await axios.get("http://localhost:8080/sales").then(res => {
+                let temp = res.data.filter((item, index)=>{
+                    if(filter.key === 'saleId' && filter.val){
+                        if(parseFloat(item[filter.key]) === parseFloat(filter.val)){
+                            item.itemKey = index + '_' + item.saleId;
+                            item.saleDate = item.saleDate !== null ? item.saleDate.slice(0, -9) : 0;
+
+                            return item;
+                        }
+                    }else if(filter.key === 'total' && filter.val){
+                        if(parseFloat(item[filter.key]) === parseFloat(filter.val)){
+                            item.itemKey = index + '_' + item.saleId;
+                            item.saleDate = item.saleDate !== null ? item.saleDate.slice(0, -9) : 0;
+
+                            return item;
+                        }
+                    }else if(filter.key === 'employeeId' && filter.val){
+                        if(parseFloat(item[filter.key]) === parseFloat(filter.val)){
+                            item.itemKey = index + '_' + item.saleId;
+                            item.saleDate = item.saleDate !== null ? item.saleDate.slice(0, -9) : 0;
+
+                            return item;
+                        }
+                    }else if(item[filter.key].toString().toUpperCase().includes(filter.val.toUpperCase())){
+                        item.itemKey = index + '_' + item.saleId;
+                        item.saleDate = item.saleDate !== null ? item.saleDate.slice(0, -9) : 0;
+
+                        return item;
+                    }
+                })
+                console.log(temp);
+                setSales([...temp])
+                return true;
+            }).catch((err)=>{
+                console.log(`${err}`);
+                return null;
+            })
+            return false;
+        }else{
+            await axios.get("http://localhost:8080/sales").then(res => {
+                res.data.map((item, index)=>{
+                    item.itemKey = index + '_' + item.saleId;
+                    item.saleDate = item.saleDate !== null ? item.saleDate.slice(0, -9) : 0;
+                })
+                console.log(res.data);
+                setSales([...res.data])
+                return true;
+            }).catch((err)=>{
+                console.log(`${err}`);
+                return null;
+            })
+            return false;
+        }
     }
 
     let refreshData = async () => {

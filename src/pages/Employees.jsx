@@ -65,7 +65,12 @@ function Employees() {
   };
   
   let handleEmpChange = async (e) => {
-    newEmp[e.target.name] = e.target.value;
+    let name = e.target.name;
+
+    setNewEmp({
+      ...newEmp,
+      name: e.target.value,
+    });
     console.log(newEmp);
   };
 
@@ -87,7 +92,6 @@ function Employees() {
   };
 
   let handleSubmitEmp = async (event) => {
-    newEmp["employeeId"] = 0;
     axios
       .post("http://localhost:8080/add_employee", newEmp)
       .then((response) => {
@@ -159,6 +163,7 @@ function Employees() {
                     className="w-full p-1 rounded-lg"
                     onChange={handleEmpChange}
                   ></input>
+                  {newEmp.firstName === null || newEmp.firstName === '' ? <small>Field cannot be empty</small> : ''}
                   <label for="lastName" className=" w-full">
                     Last Name
                   </label>
@@ -301,7 +306,6 @@ function Employees() {
                   </div>
                   <SearchGrid
                     data={departments}
-                    title="Departments"
                     urlSuffix="department"
                   />
                 </div>
@@ -351,7 +355,6 @@ function Employees() {
               </div>
               <SearchGrid
                 data={employees}
-                title="Employees"
                 urlSuffix="employee"
               />
             </div>

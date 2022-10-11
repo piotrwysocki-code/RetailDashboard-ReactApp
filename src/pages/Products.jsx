@@ -260,7 +260,6 @@ function Products() {
                   </div>
                   <SearchGrid
                     data={categories}
-                    title="Categories"
                     urlSuffix="category"
                   />
                 </div>
@@ -310,7 +309,6 @@ function Products() {
               </div>
               <SearchGrid
                 data={products}
-                title="Products"
                 urlSuffix="product"
               />
             </div>
