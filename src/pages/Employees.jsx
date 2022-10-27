@@ -75,7 +75,7 @@ function Employees() {
 
   let handleSubmitDept = async (event) => {
     axios({
-      url: "http://localhost:8080/add_department",
+      url: "https://us-central1-dashboard-api-c543e.cloudfunctions.net/app/add_department",
       method: "post",
       data: { name: name },
     })
@@ -92,7 +92,7 @@ function Employees() {
 
   let handleSubmitEmp = async (event) => {
     axios
-      .post("http://localhost:8080/add_employee", newEmp)
+      .post("https://us-central1-dashboard-api-c543e.cloudfunctions.net/app/add_employee", newEmp)
       .then((response) => {
         console.log(response);
         refreshEmployees(empFilter);

@@ -14,7 +14,7 @@ export let ContextProvider = ({ children }) => {
     let [salesProducts, setSalesProducts] = useState([]);
 
  /*   let refreshCategories = async () => {
-        await axios.get("http://localhost:8080/categories").then(res => {
+        await axios.get("https://us-central1-dashboard-api-c543e.cloudfunctions.net/app/categories").then(res => {
             res.data.map((item, index)=>{
                 item.itemKey = index + '_' + item.categoryId;
                 let count = 0;
@@ -34,7 +34,7 @@ export let ContextProvider = ({ children }) => {
     
     let refreshCategories = async (filter) => {
         if(filter && filter.key !== -1 && filter.val !== -1){
-            await axios.get("http://localhost:8080/categories").then(res => {
+            await axios.get("https://us-central1-dashboard-api-c543e.cloudfunctions.net/app/categories").then(res => {
                 let temp = res.data.filter((item, index)=>{
                     if(filter.key === 'categoryId' && filter.val){
                         if(parseFloat(item[filter.key]) === parseFloat(filter.val)){
@@ -63,7 +63,7 @@ export let ContextProvider = ({ children }) => {
             })
             return false;
         }else{
-            await axios.get("http://localhost:8080/categories").then(res => {
+            await axios.get("https://us-central1-dashboard-api-c543e.cloudfunctions.net/app/categories").then(res => {
                 res.data.map((item, index)=>{
                     item.itemKey = index + '_' + item.categoryId;
                     let count = 0;
@@ -85,7 +85,7 @@ export let ContextProvider = ({ children }) => {
     }
 
   /*  let refreshDepartments = async () => {
-        await axios.get("http://localhost:8080/departments").then(res => {
+        await axios.get("https://us-central1-dashboard-api-c543e.cloudfunctions.net/app/departments").then(res => {
             res.data.map((item, index)=>{
                 item.itemKey = index + '_' + item.deptId;
             })
@@ -104,7 +104,7 @@ export let ContextProvider = ({ children }) => {
 
     let refreshDepartments = async (filter) => {
         if(filter && filter.key !== -1 && filter.val !== -1){
-            await axios.get("http://localhost:8080/departments").then(res => {
+            await axios.get("https://us-central1-dashboard-api-c543e.cloudfunctions.net/app/departments").then(res => {
                 let temp = res.data.filter((item, index)=>{
                     if(filter.key === 'deptId' && filter.val){
                         if(parseFloat(item[filter.key]) === parseFloat(filter.val)){
@@ -125,7 +125,7 @@ export let ContextProvider = ({ children }) => {
             })
             return false;
         }else{
-            await axios.get("http://localhost:8080/departments").then(res => {
+            await axios.get("https://us-central1-dashboard-api-c543e.cloudfunctions.net/app/departments").then(res => {
                 res.data.map((item, index)=>{
                     item.itemKey = index + '_' + item.deptId;
                 })
@@ -142,7 +142,7 @@ export let ContextProvider = ({ children }) => {
 
     let refreshEmployees = async (filter) => {
         if(filter && filter.key !== -1 && filter.val !== -1){
-            await axios.get("http://localhost:8080/employees").then(res => {
+            await axios.get("https://us-central1-dashboard-api-c543e.cloudfunctions.net/app/employees").then(res => {
                 let temp = res.data.filter((item, index)=>{
                     if(filter.key === 'salary' && filter.val){
                         if(parseFloat(item[filter.key]) === parseFloat(filter.val)){
@@ -173,7 +173,7 @@ export let ContextProvider = ({ children }) => {
             })
             return false;
         }else{
-            await axios.get("http://localhost:8080/employees").then(res => {
+            await axios.get("https://us-central1-dashboard-api-c543e.cloudfunctions.net/app/employees").then(res => {
                 res.data.map((item, index)=>{
                     item.itemKey = index + '_' + item.employeeId;
                 })
@@ -190,7 +190,7 @@ export let ContextProvider = ({ children }) => {
 
 
    /* let refreshProducts = async () => {
-        await axios.get("http://localhost:8080/products").then(res => {
+        await axios.get("https://us-central1-dashboard-api-c543e.cloudfunctions.net/app/products").then(res => {
             res.data.map((item, index)=>{
                 item.itemKey = index + '_' + item.productId;
                 categories.map((temp, index)=>{
@@ -212,7 +212,7 @@ export let ContextProvider = ({ children }) => {
         
     let refreshProducts = async (filter) => {
         if(filter && filter.key !== -1 && filter.val !== -1){
-            await axios.get("http://localhost:8080/products").then(res => {
+            await axios.get("https://us-central1-dashboard-api-c543e.cloudfunctions.net/app/products").then(res => {
                 let temp = res.data.filter((item, index)=>{
                     if(filter.key === 'productId' && filter.val){
                         if(parseFloat(item[filter.key]) === parseFloat(filter.val)){
@@ -266,7 +266,7 @@ export let ContextProvider = ({ children }) => {
             })
             return false;
         }else{
-            await axios.get("http://localhost:8080/products").then(res => {
+            await axios.get("https://us-central1-dashboard-api-c543e.cloudfunctions.net/app/products").then(res => {
                 res.data.map((item, index)=>{
                     item.itemKey = index + '_' + item.productId;
                     categories.map((temp, index)=>{
@@ -289,7 +289,7 @@ export let ContextProvider = ({ children }) => {
 
    /* let refreshSalesProducts = async () => {
 
-        await axios.get("http://localhost:8080/salesprods").then(res => {
+        await axios.get("https://us-central1-dashboard-api-c543e.cloudfunctions.net/app/salesprods").then(res => {
             res.data.map((item, index)=>{
                 item.itemKey = index + '_' + item.productId + item.saleId;
             })
@@ -305,7 +305,7 @@ export let ContextProvider = ({ children }) => {
 
     let refreshSalesProducts = async (filter) => {
         if(filter && filter.key !== -1 && filter.val !== -1){
-            await axios.get("http://localhost:8080/salesprods").then(res => {
+            await axios.get("https://us-central1-dashboard-api-c543e.cloudfunctions.net/app/salesprods").then(res => {
                 let temp = res.data.filter((item, index)=>{
                     if(filter.key === 'saleId' && filter.val){
                         if(parseFloat(item[filter.key]) === parseFloat(filter.val)){
@@ -337,7 +337,7 @@ export let ContextProvider = ({ children }) => {
             })
             return false;
         }else{
-            await axios.get("http://localhost:8080/salesprods").then(res => {
+            await axios.get("https://us-central1-dashboard-api-c543e.cloudfunctions.net/app/salesprods").then(res => {
                 res.data.map((item, index)=>{
                     item.itemKey = index + '_' + item.saleId + '_' + item.productId;
                 })
@@ -354,7 +354,7 @@ export let ContextProvider = ({ children }) => {
 
 
  /*   let refreshSales = async () => {
-        await axios.get("http://localhost:8080/sales").then(res => {
+        await axios.get("https://us-central1-dashboard-api-c543e.cloudfunctions.net/app/sales").then(res => {
             res.data.map((item, index)=>{
                 item.itemKey = index + '_' + item.saleId;
                 item.saleDate = item.saleDate.slice(0, -9);
@@ -372,7 +372,7 @@ export let ContextProvider = ({ children }) => {
 
     let refreshSales = async (filter) => {
         if(filter && filter.key !== -1 && filter.val !== -1){
-            await axios.get("http://localhost:8080/sales").then(res => {
+            await axios.get("https://us-central1-dashboard-api-c543e.cloudfunctions.net/app/sales").then(res => {
                 let temp = res.data.filter((item, index)=>{
                     if(filter.key === 'saleId' && filter.val){
                         if(parseFloat(item[filter.key]) === parseFloat(filter.val)){
@@ -411,7 +411,7 @@ export let ContextProvider = ({ children }) => {
             })
             return false;
         }else{
-            await axios.get("http://localhost:8080/sales").then(res => {
+            await axios.get("https://us-central1-dashboard-api-c543e.cloudfunctions.net/app/sales").then(res => {
                 res.data.map((item, index)=>{
                     item.itemKey = index + '_' + item.saleId;
                     item.saleDate = item.saleDate !== null ? item.saleDate.slice(0, -9) : 0;

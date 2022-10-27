@@ -76,7 +76,7 @@ function Products() {
   let handleSubmitProduct = async (event) => {
     newProd["productId"] = 0;
     axios
-      .post("http://localhost:8080/add_product", newProd)
+      .post("https://us-central1-dashboard-api-c543e.cloudfunctions.net/app/add_product", newProd)
       .then((response) => {
         console.log(response);
         refreshProducts();
@@ -88,7 +88,7 @@ function Products() {
 
   let handleSubmitCategory = async (event) => {
     axios({
-      url: "http://localhost:8080/add_category",
+      url: "https://us-central1-dashboard-api-c543e.cloudfunctions.net/app/add_category",
       method: "post",
       data: { name: name },
     })

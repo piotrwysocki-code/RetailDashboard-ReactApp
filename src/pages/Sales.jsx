@@ -78,7 +78,7 @@ function Sales() {
 
   let handleSubmitSale = async (event) => {
     axios
-      .post("http://localhost:8080/add_sale", newSale)
+      .post("https://us-central1-dashboard-api-c543e.cloudfunctions.net/app/add_sale", newSale)
       .then((response) => {
         console.log(response);
         refreshSales();
@@ -90,7 +90,7 @@ function Sales() {
 
   let handleSubmitSalesProd = async (event) => {
     axios
-      .post("http://localhost:8080/add_salesprod", newSaleProd)
+      .post("hhttps://us-central1-dashboard-api-c543e.cloudfunctions.net/app/add_salesprod", newSaleProd)
       .then((response) => {
         console.log(response);
         refreshSalesProducts();

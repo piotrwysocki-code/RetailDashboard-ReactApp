@@ -26,7 +26,7 @@ function SearchGrid(props) {
   let deleteBtnClicked = async () => {
     console.log("Sending selected items: ", selected);
     axios({
-      url: `http://localhost:8080/delete_${props.urlSuffix}`,
+      url: `https://us-central1-dashboard-api-c543e.cloudfunctions.net/app/delete_${props.urlSuffix}`,
       method: "delete",
       data: selected,
     })
@@ -81,7 +81,7 @@ function SearchGrid(props) {
     console.log(newItem);
 
     axios({
-      url: `http://localhost:8080/update_${props.urlSuffix}`,
+      url: `https://us-central1-dashboard-api-c543e.cloudfunctions.net/app/update_${props.urlSuffix}`,
       method: "put",
       data: { edit: editItem, new: newItem },
     })
