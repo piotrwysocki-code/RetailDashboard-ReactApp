@@ -59,13 +59,13 @@ function Navbar(props) {
             <div class="flex flex-shrink-0 items-center">
               <img
                 class="block h-8 w-auto lg:hidden"
-                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                alt="Your Company"
+                src="../../pwlogo.png"
+                alt="PWLogo"
               />
               <img
                 class="hidden h-8 w-auto lg:block"
-                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                alt="Your Company"
+                src="../../pwlogo.png"
+                alt="PWLogo"
               />
             </div>
             <div class="hidden sm:ml-6 sm:block">

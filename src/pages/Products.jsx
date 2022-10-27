@@ -9,13 +9,56 @@ function Products() {
   const { products, categories, refreshProducts, refreshCategories } =
     useStateContext();
 
+  let initialFilter = {
+    key: -1,
+    val: -1,
+  };
+
   let [name, setName] = useState("");
   let [newProd, setNewProd] = useState({});
+
+  let [prodFilter, setProdFilter] = useState(initialFilter);
+  let [catFilter, setCatFilter] = useState(initialFilter);
+
+  let prodSearchOps = useRef(-1);
+  let catSearchOps = useRef(-1);
 
   useEffect(() => {
     refreshProducts();
     refreshCategories();
   }, []);
+
+  useEffect(() => {
+    if (categories[0]) {
+      catSearchOps.current = [];
+      Object.keys(categories[0] || "").map((key, index) => {
+        if (key !== "itemKey" && key !== "products") {
+          catSearchOps.current.push(key);
+        }
+      });
+    }
+  }, [categories]);
+
+  useEffect(() => {
+    if (products[0]) {
+      prodSearchOps.current = [];
+      Object.keys(products[0] || "").map((key, index) => {
+        if (key !== "itemKey" && key !== "category") {
+          prodSearchOps.current.push(key);
+        }
+      });
+    }
+  }, [products]);
+
+  useEffect(() => {
+    console.log(catFilter);
+    refreshCategories(catFilter);
+  }, [catFilter]);
+
+  useEffect(() => {
+    console.log(prodFilter);
+    refreshProducts(prodFilter);
+  }, [prodFilter]);
 
   let handleChange = (event) => {
     setName(event.target.value);
@@ -23,14 +66,17 @@ function Products() {
   };
 
   let handleProdChange = async (e) => {
-    newProd[e.target.name] = e.target.value;
+    setNewProd({
+      ...newProd,
+      [e.target.name]: e.target.value,
+    });
     console.log(newProd);
   };
 
   let handleSubmitProduct = async (event) => {
     newProd["productId"] = 0;
     axios
-      .post("http://localhost:8080/add_product", newProd)
+      .post("https://us-central1-dashboard-api-c543e.cloudfunctions.net/app/add_product", newProd)
       .then((response) => {
         console.log(response);
         refreshProducts();
@@ -42,7 +88,7 @@ function Products() {
 
   let handleSubmitCategory = async (event) => {
     axios({
-      url: "http://localhost:8080/add_category",
+      url: "https://us-central1-dashboard-api-c543e.cloudfunctions.net/app/add_category",
       method: "post",
       data: { name: name },
     })
@@ -55,6 +101,46 @@ function Products() {
       .catch((error) => {
         console.log(error);
       });
+  };
+
+  let searchBtnClick = async (x) => {
+    if (x === 0) {
+      refreshCategories(catFilter);
+      console.log(catFilter);
+    } else if (x === 1) {
+      refreshProducts(prodFilter);
+      console.log(prodFilter);
+    }
+  };
+
+  let searchKeyChange = (e) => {
+    console.log(e.target.name + ": " + e.target.value);
+    if (e.target.name === "catKey") {
+      setCatFilter({
+        ...catFilter,
+        key: e.target.value,
+      });
+    } else if (e.target.name === "prodKey") {
+      setProdFilter({
+        ...prodFilter,
+        key: e.target.value,
+      });
+    }
+  };
+
+  let searchTermChange = (e) => {
+    console.log(e.target.name + ": " + e.target.value);
+    if (e.target.name === "catVal") {
+      setCatFilter({
+        ...catFilter,
+        val: e.target.value,
+      });
+    } else if (e.target.name === "prodVal") {
+      setProdFilter({
+        ...prodFilter,
+        val: e.target.value,
+      });
+    }
   };
 
   return (
@@ -133,20 +219,99 @@ function Products() {
                     </button>
                   </div>
                 </div>
-                <div className="">
+
+                <div className="container text-start p-2 bg-slate-100 rounded-xl drop-shadow-md">
+                  <div className="container flex flex-row flex-wrap m-3 gap-5">
+                    <div className="">
+                      <h1 className="text-lg">Search Categories</h1>
+                    </div>
+                    <div className="flex flex-row no-wrap gap-2 justify-end">
+                      <div className="flex flex-row gap-2 content-center">
+                        <select
+                          name="catKey"
+                          onChange={searchKeyChange}
+                          className="rounded-xl"
+                        >
+                          <option>key</option>
+                          {catSearchOps.current !== -1 &&
+                            catSearchOps.current.map((key, index) => {
+                              if (key !== "itemKey") {
+                                return (
+                                  <option value={key} key={key}>
+                                    {key}
+                                  </option>
+                                );
+                              }
+                            })}
+                        </select>
+                        <input
+                          className="rounded-lg p-1"
+                          type="text"
+                          name="catVal"
+                          onChange={searchTermChange}
+                        ></input>
+                        <button
+                          className="bg-sky-200 rounded-lg p-1 pl-2 pr-2 hover:bg-sky-300"
+                          onClick={() => {
+                            searchBtnClick(0);
+                          }}
+                        >
+                          <FiSearch />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                   <SearchGrid
                     data={categories}
-                    title="Categories"
                     urlSuffix="category"
                   />
                 </div>
               </div>
             </div>
 
-            <div>
+            <div className="container text-start p-2 bg-slate-100 rounded-xl drop-shadow-md">
+              <div className="container flex flex-row flex-wrap m-3 gap-5">
+                <div className="">
+                  <h1 className="text-lg">Search Products</h1>
+                </div>
+                <div className="flex flex-row no-wrap gap-2 justify-end">
+                  <div className="flex flex-row gap-2 content-center">
+                    <select
+                      name="prodKey"
+                      onChange={searchKeyChange}
+                      className="rounded-xl"
+                    >
+                      <option>key</option>
+                      {prodSearchOps.current !== -1 &&
+                        prodSearchOps.current.map((key, index) => {
+                          if (key !== "itemKey") {
+                            return (
+                              <option value={key} key={key}>
+                                {key}
+                              </option>
+                            );
+                          }
+                        })}
+                    </select>
+                    <input
+                      className="rounded-lg p-1"
+                      type="text"
+                      name="prodVal"
+                      onChange={searchTermChange}
+                    ></input>
+                    <button
+                      className="bg-sky-200 rounded-lg p-1 pl-2 pr-2 hover:bg-sky-300"
+                      onClick={() => {
+                        searchBtnClick(0);
+                      }}
+                    >
+                      <FiSearch />
+                    </button>
+                  </div>
+                </div>
+              </div>
               <SearchGrid
                 data={products}
-                title="Products"
                 urlSuffix="product"
               />
             </div>
