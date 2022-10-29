@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useStateContext } from "../context/ContextProvider";
-import { FiSearch, FiTrash2 } from "react-icons/fi";
+import { FiSearch } from "react-icons/fi";
 import SearchGrid from "../components/SearchGrid";
 import axios from "axios";
 import Navbar from "../components/Navbar";
@@ -92,7 +92,10 @@ function Employees() {
 
   let handleSubmitEmp = async (event) => {
     axios
-      .post("https://us-central1-dashboard-api-c543e.cloudfunctions.net/app/add_employee", newEmp)
+      .post(
+        "https://us-central1-dashboard-api-c543e.cloudfunctions.net/app/add_employee",
+        newEmp
+      )
       .then((response) => {
         console.log(response);
         refreshEmployees(empFilter);
@@ -262,29 +265,29 @@ function Employees() {
                 </div>
 
                 <div className="container text-start p-2 bg-slate-100 rounded-xl drop-shadow-md">
-                  <div className="container flex flex-row flex-wrap m-3 gap-5">
+                  <div className="container flex flex-col lg:flex-row flex-wrap m-3 gap-5">
                     <div className="">
                       <h1 className="text-lg">Search Departments</h1>
                     </div>
-                    <div className="flex flex-row no-wrap gap-2 justify-end">
-                      <div className="flex flex-row gap-2 content-center">
-                        <select
-                          name="deptKey"
-                          onChange={searchKeyChange}
-                          className="rounded-xl"
-                        >
-                          <option>key</option>
-                          {deptSearchOps.current !== -1 &&
-                            deptSearchOps.current.map((key, index) => {
-                              if (key !== "itemKey") {
-                                return (
-                                  <option value={key} key={key}>
-                                    {key}
-                                  </option>
-                                );
-                              }
-                            })}
-                        </select>
+                    <div className="flex flex-row flex-wrap gap-2 content-center">
+                      <select
+                        name="deptKey"
+                        onChange={searchKeyChange}
+                        className="rounded-lg p-1"
+                      >
+                        <option>key</option>
+                        {deptSearchOps.current !== -1 &&
+                          deptSearchOps.current.map((key, index) => {
+                            if (key !== "itemKey") {
+                              return (
+                                <option value={key} key={key}>
+                                  {key}
+                                </option>
+                              );
+                            }
+                          })}
+                      </select>
+                      <div className="flex flex-row items-stretch gap-2">
                         <input
                           className="rounded-lg p-1"
                           type="text"
@@ -308,29 +311,29 @@ function Employees() {
             </div>
 
             <div className="container text-start p-2 bg-slate-100 rounded-xl drop-shadow-md">
-              <div className="container flex flex-row flex-wrap m-3 lg:gap-5">
+              <div className="container flex flex-col lg:flex-row flex-wrap m-3 gap-5">
                 <div className="">
                   <h1 className="text-lg">Search Employees</h1>
                 </div>
-                <div className="flex flex-row no-wrap gap-2 justify-end">
-                  <div className="flex flex-row gap-2 content-center">
-                    <select
-                      name="empKey"
-                      onChange={searchKeyChange}
-                      className="rounded-xl"
-                    >
-                      <option>key</option>
-                      {empSearchOps.current !== -1 &&
-                        empSearchOps.current.map((key, index) => {
-                          if (key !== "itemKey") {
-                            return (
-                              <option value={key} key={key}>
-                                {key}
-                              </option>
-                            );
-                          }
-                        })}
-                    </select>
+                <div className="flex flex-row flex-wrap gap-2 content-center">
+                  <select
+                    name="empKey"
+                    onChange={searchKeyChange}
+                    className="rounded-lg p-1"
+                  >
+                    <option>key</option>
+                    {empSearchOps.current !== -1 &&
+                      empSearchOps.current.map((key, index) => {
+                        if (key !== "itemKey") {
+                          return (
+                            <option value={key} key={key}>
+                              {key}
+                            </option>
+                          );
+                        }
+                      })}
+                  </select>
+                  <div className="flex flex-row items-stretch gap-2">
                     <input
                       className="rounded-lg p-1"
                       type="text"

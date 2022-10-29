@@ -78,7 +78,10 @@ function Sales() {
 
   let handleSubmitSale = async (event) => {
     axios
-      .post("https://us-central1-dashboard-api-c543e.cloudfunctions.net/app/add_sale", newSale)
+      .post(
+        "https://us-central1-dashboard-api-c543e.cloudfunctions.net/app/add_sale",
+        newSale
+      )
       .then((response) => {
         console.log(response);
         refreshSales();
@@ -90,7 +93,10 @@ function Sales() {
 
   let handleSubmitSalesProd = async (event) => {
     axios
-      .post("hhttps://us-central1-dashboard-api-c543e.cloudfunctions.net/app/add_salesprod", newSaleProd)
+      .post(
+        "https://us-central1-dashboard-api-c543e.cloudfunctions.net/app/add_salesprod",
+        newSaleProd
+      )
       .then((response) => {
         console.log(response);
         refreshSalesProducts();
@@ -232,25 +238,25 @@ function Sales() {
                     <div className="">
                       <h1 className="text-lg">Search Sold Products</h1>
                     </div>
-                    <div className="flex flex-row no-wrap gap-2 justify-end">
-                      <div className="flex flex-row gap-2 content-center">
-                        <select
-                          name="salesProdKey"
-                          onChange={searchKeyChange}
-                          className="rounded-xl"
-                        >
-                          <option>key</option>
-                          {salesProdSearchOps.current !== -1 &&
-                            salesProdSearchOps.current.map((key, index) => {
-                              if (key !== "itemKey") {
-                                return (
-                                  <option value={key} key={key}>
-                                    {key}
-                                  </option>
-                                );
-                              }
-                            })}
-                        </select>
+                    <div className="flex flex-row flex-wrap gap-2 content-center">
+                      <select
+                        name="salesProdKey"
+                        onChange={searchKeyChange}
+                        className="rounded-lg p-1"
+                      >
+                        <option>key</option>
+                        {salesProdSearchOps.current !== -1 &&
+                          salesProdSearchOps.current.map((key, index) => {
+                            if (key !== "itemKey") {
+                              return (
+                                <option value={key} key={key}>
+                                  {key}
+                                </option>
+                              );
+                            }
+                          })}
+                      </select>
+                      <div className="flex flex-row items-stretch gap-2">
                         <input
                           className="rounded-lg p-1"
                           type="text"
@@ -277,25 +283,25 @@ function Sales() {
                 <div className="">
                   <h1 className="text-lg">Search Sales</h1>
                 </div>
-                <div className="flex flex-row no-wrap gap-2 justify-end">
-                  <div className="flex flex-row gap-2 content-center">
-                    <select
-                      name="salesKey"
-                      onChange={searchKeyChange}
-                      className="rounded-xl"
-                    >
-                      <option>key</option>
-                      {salesSearchOps.current !== -1 &&
-                        salesSearchOps.current.map((key, index) => {
-                          if (key !== "itemKey") {
-                            return (
-                              <option value={key} key={key}>
-                                {key}
-                              </option>
-                            );
-                          }
-                        })}
-                    </select>
+                <div className="flex flex-row flex-wrap gap-2 content-center">
+                  <select
+                    name="salesKey"
+                    onChange={searchKeyChange}
+                    className="rounded-lg p-1"
+                  >
+                    <option>key</option>
+                    {salesSearchOps.current !== -1 &&
+                      salesSearchOps.current.map((key, index) => {
+                        if (key !== "itemKey") {
+                          return (
+                            <option value={key} key={key}>
+                              {key}
+                            </option>
+                          );
+                        }
+                      })}
+                  </select>
+                  <div className="flex flex-row items-stretch gap-2">
                     <input
                       className="rounded-lg p-1"
                       type="text"

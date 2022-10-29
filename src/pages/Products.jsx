@@ -76,7 +76,10 @@ function Products() {
   let handleSubmitProduct = async (event) => {
     newProd["productId"] = 0;
     axios
-      .post("https://us-central1-dashboard-api-c543e.cloudfunctions.net/app/add_product", newProd)
+      .post(
+        "https://us-central1-dashboard-api-c543e.cloudfunctions.net/app/add_product",
+        newProd
+      )
       .then((response) => {
         console.log(response);
         refreshProducts();
@@ -225,25 +228,25 @@ function Products() {
                     <div className="">
                       <h1 className="text-lg">Search Categories</h1>
                     </div>
-                    <div className="flex flex-row no-wrap gap-2 justify-end">
-                      <div className="flex flex-row gap-2 content-center">
-                        <select
-                          name="catKey"
-                          onChange={searchKeyChange}
-                          className="rounded-xl"
-                        >
-                          <option>key</option>
-                          {catSearchOps.current !== -1 &&
-                            catSearchOps.current.map((key, index) => {
-                              if (key !== "itemKey") {
-                                return (
-                                  <option value={key} key={key}>
-                                    {key}
-                                  </option>
-                                );
-                              }
-                            })}
-                        </select>
+                    <div className="flex flex-row flex-wrap gap-2 content-center">
+                      <select
+                        name="catKey"
+                        onChange={searchKeyChange}
+                        className="rounded-lg p-1"
+                      >
+                        <option>key</option>
+                        {catSearchOps.current !== -1 &&
+                          catSearchOps.current.map((key, index) => {
+                            if (key !== "itemKey") {
+                              return (
+                                <option value={key} key={key}>
+                                  {key}
+                                </option>
+                              );
+                            }
+                          })}
+                      </select>
+                      <div className="flex flex-row items-stretch gap-2">
                         <input
                           className="rounded-lg p-1"
                           type="text"
@@ -261,10 +264,7 @@ function Products() {
                       </div>
                     </div>
                   </div>
-                  <SearchGrid
-                    data={categories}
-                    urlSuffix="category"
-                  />
+                  <SearchGrid data={categories} urlSuffix="category" />
                 </div>
               </div>
             </div>
@@ -274,25 +274,25 @@ function Products() {
                 <div className="">
                   <h1 className="text-lg">Search Products</h1>
                 </div>
-                <div className="flex flex-row no-wrap gap-2 justify-end">
-                  <div className="flex flex-row gap-2 content-center">
-                    <select
-                      name="prodKey"
-                      onChange={searchKeyChange}
-                      className="rounded-xl"
-                    >
-                      <option>key</option>
-                      {prodSearchOps.current !== -1 &&
-                        prodSearchOps.current.map((key, index) => {
-                          if (key !== "itemKey") {
-                            return (
-                              <option value={key} key={key}>
-                                {key}
-                              </option>
-                            );
-                          }
-                        })}
-                    </select>
+                <div className="flex flex-row flex-wrap gap-2 content-center">
+                  <select
+                    name="prodKey"
+                    onChange={searchKeyChange}
+                    className="rounded-lg p-1"
+                  >
+                    <option>key</option>
+                    {prodSearchOps.current !== -1 &&
+                      prodSearchOps.current.map((key, index) => {
+                        if (key !== "itemKey") {
+                          return (
+                            <option value={key} key={key}>
+                              {key}
+                            </option>
+                          );
+                        }
+                      })}
+                  </select>
+                  <div className="flex flex-row items-stretch gap-2">
                     <input
                       className="rounded-lg p-1"
                       type="text"
@@ -310,10 +310,7 @@ function Products() {
                   </div>
                 </div>
               </div>
-              <SearchGrid
-                data={products}
-                urlSuffix="product"
-              />
+              <SearchGrid data={products} urlSuffix="product" />
             </div>
           </div>
         </div>
