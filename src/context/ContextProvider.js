@@ -13,25 +13,6 @@ export let ContextProvider = ({ children }) => {
     let [departments, setDepartments] = useState([])
     let [salesProducts, setSalesProducts] = useState([]);
 
- /*   let refreshCategories = async () => {
-        await axios.get("https://us-central1-dashboard-api-c543e.cloudfunctions.net/app/categories").then(res => {
-            res.data.map((item, index)=>{
-                item.itemKey = index + '_' + item.categoryId;
-                let count = 0;
-                products.map((temp, index)=>{
-                    count = temp.categoryId === item.categoryId ? count +=1 : count += 0;
-                })
-                item.products = count;
-            })
-            setCategories([...res.data])
-            return true;
-        }).catch((err)=>{
-            console.log(`${err}`);
-            return null;
-        })
-        return false;
-    } */
-    
     let refreshCategories = async (filter) => {
         if(filter && filter.key !== -1 && filter.val !== -1){
             await axios.get("https://us-central1-dashboard-api-c543e.cloudfunctions.net/app/categories").then(res => {
@@ -47,13 +28,7 @@ export let ContextProvider = ({ children }) => {
                     }
 
                 })
-                temp.map((item, index)=>{
-                    let count = 0;
-                    products.map((x, index)=>{
-                        count = x.categoryId === item.categoryId ? count +=1 : count += 0;
-                    })
-                    item.products = count;
-                })
+
                 setCategories([...temp])
                 return true;
 
@@ -66,12 +41,6 @@ export let ContextProvider = ({ children }) => {
             await axios.get("https://us-central1-dashboard-api-c543e.cloudfunctions.net/app/categories").then(res => {
                 res.data.map((item, index)=>{
                     item.itemKey = index + '_' + item.categoryId;
-                    let count = 0;
-                    products.map((x, index)=>{
-                        count = x.categoryId === item.categoryId ? count +=1 : count += 0;
-                    })
-                    
-                    item.products = count;
                 })
                 console.log(res.data);
                 setCategories([...res.data])
@@ -83,24 +52,6 @@ export let ContextProvider = ({ children }) => {
             return false;
         }
     }
-
-  /*  let refreshDepartments = async () => {
-        await axios.get("https://us-central1-dashboard-api-c543e.cloudfunctions.net/app/departments").then(res => {
-            res.data.map((item, index)=>{
-                item.itemKey = index + '_' + item.deptId;
-            })
-            console.log(res.data);
-
-            setDepartments([...res.data])
-
-            return true;
-        }).catch((err)=>{
-            console.log(`${err}`);
-            return null;
-        })
-        return false;
-    
-    }*/
 
     let refreshDepartments = async (filter) => {
         if(filter && filter.key !== -1 && filter.val !== -1){
@@ -188,28 +139,6 @@ export let ContextProvider = ({ children }) => {
         }
     }
 
-
-   /* let refreshProducts = async () => {
-        await axios.get("https://us-central1-dashboard-api-c543e.cloudfunctions.net/app/products").then(res => {
-            res.data.map((item, index)=>{
-                item.itemKey = index + '_' + item.productId;
-                categories.map((temp, index)=>{
-                    if(temp.categoryId === item.categoryId){
-                        item.category = temp.categoryName;
-                    }
-                })
-            })
-            setProducts([...res.data])
-            return true;
-        }).catch((err)=>{
-            console.log(`${err}`);
-            return null;
-        })
-        return false;
-        
-    } */
-
-        
     let refreshProducts = async (filter) => {
         if(filter && filter.key !== -1 && filter.val !== -1){
             await axios.get("https://us-central1-dashboard-api-c543e.cloudfunctions.net/app/products").then(res => {
@@ -217,42 +146,26 @@ export let ContextProvider = ({ children }) => {
                     if(filter.key === 'productId' && filter.val){
                         if(parseFloat(item[filter.key]) === parseFloat(filter.val)){
                             item.itemKey = index + '_' + item.productId;
-                            categories.map((temp, index)=>{
-                                if(temp.categoryId === item.categoryId){
-                                    item.category = temp.categoryName;
-                                }
-                            })
+
                             return item;
                         }
                     }else if(filter.key === 'price' && filter.val){
                         if(parseFloat(item[filter.key]) === parseFloat(filter.val)){
                             item.itemKey = index + '_' + item.productId;
-                            categories.map((temp, index)=>{
-                                if(temp.categoryId === item.categoryId){
-                                    item.category = temp.categoryName;
-                                }
-                            })
+
                             return item;
 
                         }
                     }else if(filter.key === 'categoryId' && filter.val){
                         if(parseFloat(item[filter.key]) === parseFloat(filter.val)){
                             item.itemKey = index + '_' + item.productId;
-                            categories.map((temp, index)=>{
-                                if(temp.categoryId === item.categoryId){
-                                    item.category = temp.categoryName;
-                                }
-                            })
+
                             return item;
 
                         }
                     }else if(item[filter.key].toString().toUpperCase().includes(filter.val.toUpperCase())){
                         item.itemKey = index + '_' + item.productId;
-                        categories.map((temp, index)=>{
-                            if(temp.categoryId === item.categoryId){
-                                item.category = temp.categoryName;
-                            }
-                        })
+
                         return item;
                     }
 
@@ -269,11 +182,7 @@ export let ContextProvider = ({ children }) => {
             await axios.get("https://us-central1-dashboard-api-c543e.cloudfunctions.net/app/products").then(res => {
                 res.data.map((item, index)=>{
                     item.itemKey = index + '_' + item.productId;
-                    categories.map((temp, index)=>{
-                        if(temp.categoryId === item.categoryId){
-                            item.category = temp.categoryName;
-                        }
-                    })
+
                     return item;
                 })
                 console.log(res.data);
@@ -287,21 +196,6 @@ export let ContextProvider = ({ children }) => {
         }
     }
 
-   /* let refreshSalesProducts = async () => {
-
-        await axios.get("https://us-central1-dashboard-api-c543e.cloudfunctions.net/app/salesprods").then(res => {
-            res.data.map((item, index)=>{
-                item.itemKey = index + '_' + item.productId + item.saleId;
-            })
-            setSalesProducts([...res.data])
-            return true;
-        }).catch((err)=>{
-            console.log(`${err}`);
-            return null;
-        })
-        return false;
-        
-    }*/
 
     let refreshSalesProducts = async (filter) => {
         if(filter && filter.key !== -1 && filter.val !== -1){
@@ -351,24 +245,6 @@ export let ContextProvider = ({ children }) => {
             return false;
         }
     }
-
-
- /*   let refreshSales = async () => {
-        await axios.get("https://us-central1-dashboard-api-c543e.cloudfunctions.net/app/sales").then(res => {
-            res.data.map((item, index)=>{
-                item.itemKey = index + '_' + item.saleId;
-                item.saleDate = item.saleDate.slice(0, -9);
-
-            })
-            setSales([...res.data])
-            return true;
-        }).catch((err)=>{
-            console.log(`${err}`);
-            return null;
-        })
-        return false;
-
-    }*/
 
     let refreshSales = async (filter) => {
         if(filter && filter.key !== -1 && filter.val !== -1){

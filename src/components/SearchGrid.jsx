@@ -102,91 +102,72 @@ function SearchGrid(props) {
       });
   };
 
-
   return (
     <div className="container text-start p-5 bg-slate-100 rounded-xl ">
       <div className="overflow-scroll max-h-screen lg:max-h-96">
-        <table className="table-auto m-2 w-full">
-          <tr className="sticky top-0 bg-slate-100">
-            <th>
-              <button
-                className="rounded-xl bg-rose-200 hover:bg-red-100 p-1 mt-3 lg:mt-0"
-                onClick={deleteBtnClicked}
-              >
-                <FiTrash2 />
-              </button>
-            </th>
-            {props.data &&
-              Object.keys(props.data[0] || "").map((item, index) => {
-                if (item !== "itemKey") {
-                  return (
-                    <th className="font-thin " key={item}>
-                      {item}
-                    </th>
-                  );
-                }
-              })}
-          </tr>
-          {props.data ?
-            props.data.map((item, index) => {
-              return (
-                <tr
-                  className={`border-b text-center ${
-                    item.itemKey === editItem.itemKey
-                      ? "bg-neutral-200"
-                      : "bg-neutral-50"
-                  } 
-                    ${
-                      selected.includes(item)
-                        ? "bg-neutral-200 cursor-pointer"
-                        : "bg-neutral-50"
-                    }
-                    hover:bg-neutral-200 cursor-pointer`}
-                  key={item.itemKey}
+        {props.data.length > 0 ? (
+          <table className="table-auto m-2 w-full">
+            <tr className="sticky top-0 bg-slate-100">
+              <th>
+                <button
+                  className="rounded-xl bg-rose-200 hover:bg-red-100 p-1 mt-3 lg:mt-0"
+                  onClick={deleteBtnClicked}
                 >
-                  <td className="p-4">
-                    <input
-                      type="checkbox"
-                      onClick={() => checkboxTicked(item)}
-                    ></input>
-                  </td>
-                  {editItem.itemKey !== item.itemKey
-                    ? Object.keys(item).map((key, index) => {
-                        if (key !== "itemKey") {
-                          return (
-                            <td
-                              key={key}
-                              className="p-4"
-                              onClick={() => {
-                                editItemClick(item, key);
-                              }}
-                            >
-                              {JSON.stringify(item[key]) || item[key]}
-                            </td>
-                          );
-                        }
-                      })
-                    : Object.keys(editItem).map((key, index) => {
-                        if (key === editKey) {
-                          return (
-                            <td
-                              className="p-4"
-                              onClick={() => {
-                                editItemClick(item, key);
-                              }}
-                              key={key}
-                            >
-                              <input
-                                className="text-center w-fit"
-                                type="text"
-                                value={editVal}
-                                onChange={handleChangeVal}
-                                onBlur={handleInputBlur}
-                              />
-                            </td>
-                          );
-                        } else {
+                  <FiTrash2 />
+                </button>
+              </th>
+              {props.data &&
+                Object.keys(props.data[0] || "").map((item, index) => {
+                  if (item !== "itemKey") {
+                    return (
+                      <th className="font-thin " key={item}>
+                        {item}
+                      </th>
+                    );
+                  }
+                })}
+            </tr>
+            {props.data ? (
+              props.data.map((item, index) => {
+                return (
+                  <tr
+                    className={`border-b text-center ${
+                      item.itemKey === editItem.itemKey
+                        ? "bg-neutral-200"
+                        : "bg-neutral-50"
+                    } 
+                      ${
+                        selected.includes(item)
+                          ? "bg-neutral-200 cursor-pointer"
+                          : "bg-neutral-50"
+                      }
+                      hover:bg-neutral-200 cursor-pointer`}
+                    key={item.itemKey}
+                  >
+                    <td className="p-4">
+                      <input
+                        type="checkbox"
+                        onClick={() => checkboxTicked(item)}
+                      ></input>
+                    </td>
+                    {editItem.itemKey !== item.itemKey
+                      ? Object.keys(item).map((key, index) => {
                           if (key !== "itemKey") {
+                            return (
+                              <td
+                                key={key}
+                                className="p-4"
+                                onClick={() => {
+                                  editItemClick(item, key);
+                                }}
+                              >
+                                {JSON.stringify(item[key]) || item[key]}
+                              </td>
+                            );
+                          }
+                        })
+                      : Object.keys(editItem).map((key, index) => {
+                          if (key === editKey) {
                             return (
                               <td
                                 className="p-4"
@@ -195,18 +176,41 @@ function SearchGrid(props) {
                                 }}
                                 key={key}
                               >
-                                {JSON.stringify(item[key]) || item[key]}
+                                <input
+                                  className="text-center w-fit"
+                                  type="text"
+                                  value={editVal}
+                                  onChange={handleChangeVal}
+                                  onBlur={handleInputBlur}
+                                />
                               </td>
                             );
+                          } else {
+                            if (key !== "itemKey") {
+                              return (
+                                <td
+                                  className="p-4"
+                                  onClick={() => {
+                                    editItemClick(item, key);
+                                  }}
+                                  key={key}
+                                >
+                                  {JSON.stringify(item[key]) || item[key]}
+                                </td>
+                              );
+                            }
                           }
-                        }
-                      })}
-                </tr>
-              );
-            })
-            : <h1>Loading</h1>
-          }
-        </table>
+                        })}
+                  </tr>
+                );
+              })
+            ) : (
+              <h1>Loading</h1>
+            )}
+          </table>
+        ) : (
+          <h1>Loading...</h1>
+        )}
       </div>
     </div>
   );
