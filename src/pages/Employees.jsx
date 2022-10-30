@@ -4,6 +4,7 @@ import { FiSearch } from "react-icons/fi";
 import SearchGrid from "../components/SearchGrid";
 import axios from "axios";
 import Navbar from "../components/Navbar";
+import Loader from "../components/Loader";
 
 function Employees() {
   const { employees, departments, refreshEmployees, refreshDepartments } =
@@ -235,9 +236,9 @@ function Employees() {
                     onChange={handleEmpChange}
                   ></input>
                 </form>
-                <div className="flex flex-col justify-between items-center gap-5 lg:flex-row content-center m-3">
+                <div className="flex flex-col justify-end items-center gap-5 lg:flex-row content-center m-3">
                   <button
-                    className="rounded-xl bg-sky-200 hover:bg-sky-300 p-1 pl-2 pr-2 mt-2"
+                    className="rounded-xl w-full lg:w-fit bg-sky-200 hover:bg-sky-300 p-1 pl-2 pr-2"
                     onClick={handleSubmitEmp}
                   >
                     Submit
@@ -246,7 +247,7 @@ function Employees() {
               </div>
               <div className="container flex flex-col gap-5 w-full lg:w-1/2">
                 <div className="container text-start p-5 bg-slate-100 rounded-xl drop-shadow-md">
-                  <h1 className="text-xl mb-2">New Department</h1>
+                  <h1 className="text-2xl mb-2">New Department</h1>
                   <div className="flex flex-col justify-end gap-3 lg:flex-row content-center">
                     <label for="deptName">Name</label>
                     <input
@@ -275,7 +276,7 @@ function Employees() {
                         onChange={searchKeyChange}
                         className="rounded-lg p-1"
                       >
-                        <option>key</option>
+                        <option>Select filter</option>
                         {deptSearchOps.current !== -1 &&
                           deptSearchOps.current.map((key, index) => {
                             if (key !== "itemKey") {
@@ -321,7 +322,7 @@ function Employees() {
                     onChange={searchKeyChange}
                     className="rounded-lg p-1"
                   >
-                    <option>key</option>
+                    <option>Select filter</option>
                     {empSearchOps.current !== -1 &&
                       empSearchOps.current.map((key, index) => {
                         if (key !== "itemKey") {

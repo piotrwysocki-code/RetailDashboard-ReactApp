@@ -205,7 +205,7 @@ function Products() {
               </div>
               <div className="container flex flex-col gap-5 w-full lg:w-1/2">
                 <div className="container text-start p-5 bg-slate-100 rounded-xl drop-shadow-md">
-                  <h1 className="text-xl mb-2">New Category</h1>
+                  <h1 className="text-2xl mb-2">New Category</h1>
                   <div className="flex flex-col justify-end gap-3 lg:flex-row content-center">
                     <label for="deptName">Name</label>
                     <input
@@ -234,7 +234,7 @@ function Products() {
                         onChange={searchKeyChange}
                         className="rounded-lg p-1"
                       >
-                        <option>key</option>
+                        <option>Select filter</option>
                         {catSearchOps.current !== -1 &&
                           catSearchOps.current.map((key, index) => {
                             if (key !== "itemKey") {
@@ -280,7 +280,7 @@ function Products() {
                     onChange={searchKeyChange}
                     className="rounded-lg p-1"
                   >
-                    <option>key</option>
+                    <option>Select filter</option>
                     {prodSearchOps.current !== -1 &&
                       prodSearchOps.current.map((key, index) => {
                         if (key !== "itemKey") {

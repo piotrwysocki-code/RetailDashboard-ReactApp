@@ -195,42 +195,40 @@ function Sales() {
                 </div>
               </div>
               <div className="container text-start p-5 bg-slate-100 rounded-xl drop-shadow-md flex flex-col xl:w-1/2">
-                <h1 className="text-xl mb-2">New Sales Product</h1>
+                <h1 className="text-2xl mb-2">Add Sold Product</h1>
                 <div className="flex flex-col justify-start gap-3 flex-wrap">
-                  <div className="w-full flex flex-col lg:flex-row justify-between">
+                  <form className="container flex flex-col gap-2 items-start content-center">
                     <label for="saleId">SaleID</label>
                     <input
                       type="number"
                       name="saleId"
                       onChange={handleChangeProds}
-                      className="p-1 rounded-lg w-full lg:w-1/2"
+                      className="p-1 rounded-lg w-full"
                     ></input>
-                  </div>
-                  <div className="w-full flex flex-col lg:flex-row justify-between">
                     <label for="productId">ProductID</label>
                     <input
                       type="number"
                       name="productId"
                       onChange={handleChangeProds}
-                      className="p-1 rounded-lg w-full lg:w-1/2"
+                      className="p-1 rounded-lg w-full"
                     ></input>
-                  </div>
-                  <div className="w-full flex flex-col lg:flex-row justify-between">
                     <label for="quantity">Quantity</label>
                     <input
                       type="number"
                       name="quantity"
                       onChange={handleChangeProds}
-                      className="p-1 rounded-lg w-full lg:w-1/2"
+                      className="p-1 rounded-lg w-full"
                     ></input>
-                  </div>
+                  </form>
                 </div>
-                <button
-                  className="rounded-xl bg-sky-200 hover:bg-sky-300 p-1 pl-2 pr-2 mt-5 lg:w-fit"
-                  onClick={handleSubmitSalesProd}
-                >
-                  Submit
-                </button>
+                <div className="flex flex-col justify-end gap-5 lg:flex-row content-centerd m-3">
+                  <button
+                    className="rounded-xl bg-sky-200 hover:bg-sky-300 p-1 pl-2 pr-2 mt-5 lg:w-fit"
+                    onClick={handleSubmitSalesProd}
+                  >
+                    Submit
+                  </button>
+                </div>
               </div>
               <div className="container flex flex-col gap-5 w-full xl:w-1/2">
                 <div className="container text-start p-2 bg-slate-100 rounded-xl drop-shadow-md">
@@ -244,7 +242,7 @@ function Sales() {
                         onChange={searchKeyChange}
                         className="rounded-lg p-1"
                       >
-                        <option>key</option>
+                        <option>Select filter</option>
                         {salesProdSearchOps.current !== -1 &&
                           salesProdSearchOps.current.map((key, index) => {
                             if (key !== "itemKey") {
@@ -289,7 +287,7 @@ function Sales() {
                     onChange={searchKeyChange}
                     className="rounded-lg p-1"
                   >
-                    <option>key</option>
+                    <option>Select filter</option>
                     {salesSearchOps.current !== -1 &&
                       salesSearchOps.current.map((key, index) => {
                         if (key !== "itemKey") {

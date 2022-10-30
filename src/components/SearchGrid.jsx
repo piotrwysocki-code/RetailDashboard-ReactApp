@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FiSearch, FiTrash2 } from "react-icons/fi";
 import axios from "axios";
 import { useStateContext } from "../context/ContextProvider";
+import Loader from ".//Loader";
 
 function SearchGrid(props) {
   let { refreshData } = useStateContext();
@@ -103,7 +104,7 @@ function SearchGrid(props) {
   };
 
   return (
-    <div className="container text-start p-5 bg-slate-100 rounded-xl ">
+    <div className="container p-5 text-start bg-slate-100 rounded-xl">
       <div className="overflow-scroll max-h-screen lg:max-h-96">
         {props.data.length > 0 ? (
           <table className="table-auto m-2 w-full">
@@ -127,66 +128,47 @@ function SearchGrid(props) {
                   }
                 })}
             </tr>
-            {props.data ? (
-              props.data.map((item, index) => {
-                return (
-                  <tr
-                    className={`border-b text-center ${
-                      item.itemKey === editItem.itemKey
-                        ? "bg-neutral-200"
-                        : "bg-neutral-50"
-                    } 
+            {props.data
+              ? props.data.map((item, index) => {
+                  return (
+                    <tr
+                      className={`border-b text-center ${
+                        item.itemKey === editItem.itemKey
+                          ? "bg-neutral-200"
+                          : "bg-neutral-50"
+                      } 
                       ${
                         selected.includes(item)
                           ? "bg-neutral-200 cursor-pointer"
                           : "bg-neutral-50"
                       }
                       hover:bg-neutral-200 cursor-pointer`}
-                    key={item.itemKey}
-                  >
-                    <td className="p-4">
-                      <input
-                        type="checkbox"
-                        onClick={() => checkboxTicked(item)}
-                      ></input>
-                    </td>
-                    {editItem.itemKey !== item.itemKey
-                      ? Object.keys(item).map((key, index) => {
-                          if (key !== "itemKey") {
-                            return (
-                              <td
-                                key={key}
-                                className="p-4"
-                                onClick={() => {
-                                  editItemClick(item, key);
-                                }}
-                              >
-                                {JSON.stringify(item[key]) || item[key]}
-                              </td>
-                            );
-                          }
-                        })
-                      : Object.keys(editItem).map((key, index) => {
-                          if (key === editKey) {
-                            return (
-                              <td
-                                className="p-4"
-                                onClick={() => {
-                                  editItemClick(item, key);
-                                }}
-                                key={key}
-                              >
-                                <input
-                                  className="text-center w-fit"
-                                  type="text"
-                                  value={editVal}
-                                  onChange={handleChangeVal}
-                                  onBlur={handleInputBlur}
-                                />
-                              </td>
-                            );
-                          } else {
+                      key={item.itemKey}
+                    >
+                      <td className="p-4">
+                        <input
+                          type="checkbox"
+                          onClick={() => checkboxTicked(item)}
+                        ></input>
+                      </td>
+                      {editItem.itemKey !== item.itemKey
+                        ? Object.keys(item).map((key, index) => {
                             if (key !== "itemKey") {
+                              return (
+                                <td
+                                  key={key}
+                                  className="p-4"
+                                  onClick={() => {
+                                    editItemClick(item, key);
+                                  }}
+                                >
+                                  {JSON.stringify(item[key]) || item[key]}
+                                </td>
+                              );
+                            }
+                          })
+                        : Object.keys(editItem).map((key, index) => {
+                            if (key === editKey) {
                               return (
                                 <td
                                   className="p-4"
@@ -195,21 +177,38 @@ function SearchGrid(props) {
                                   }}
                                   key={key}
                                 >
-                                  {JSON.stringify(item[key]) || item[key]}
+                                  <input
+                                    className="text-center w-fit"
+                                    type="text"
+                                    value={editVal}
+                                    onChange={handleChangeVal}
+                                    onBlur={handleInputBlur}
+                                  />
                                 </td>
                               );
+                            } else {
+                              if (key !== "itemKey") {
+                                return (
+                                  <td
+                                    className="p-4"
+                                    onClick={() => {
+                                      editItemClick(item, key);
+                                    }}
+                                    key={key}
+                                  >
+                                    {JSON.stringify(item[key]) || item[key]}
+                                  </td>
+                                );
+                              }
                             }
-                          }
-                        })}
-                  </tr>
-                );
-              })
-            ) : (
-              <h1>Loading</h1>
-            )}
+                          })}
+                    </tr>
+                  );
+                })
+              : ""}
           </table>
         ) : (
-          <h1>Loading...</h1>
+          <Loader />
         )}
       </div>
     </div>
