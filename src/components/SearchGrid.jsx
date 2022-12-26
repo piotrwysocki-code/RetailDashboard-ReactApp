@@ -40,7 +40,7 @@ function SearchGrid(props) {
           setNewItem({});
           setEditVal("");
           setSelected([]);
-
+          
           refreshData();
 
           console.log("refreshing...");
