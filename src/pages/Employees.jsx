@@ -4,7 +4,7 @@ import { FiSearch } from "react-icons/fi";
 import SearchGrid from "../components/SearchGrid";
 import axios from "axios";
 import Navbar from "../components/Navbar";
-import Loader from "../components/Loader";
+import ButtonRounded from "../components/ButtonRounded";
 
 function Employees() {
   const { employees, departments, refreshEmployees, refreshDepartments } =
@@ -237,12 +237,7 @@ function Employees() {
                   ></input>
                 </form>
                 <div className="flex flex-col justify-end items-center gap-5 lg:flex-row content-center m-3">
-                  <button
-                    className="rounded-xl w-full lg:w-fit bg-sky-200 hover:bg-sky-300 p-1 pl-2 pr-2"
-                    onClick={handleSubmitEmp}
-                  >
-                    Submit
-                  </button>
+                  <ButtonRounded text="Submit" handleClick={handleSubmitEmp} />
                 </div>
               </div>
               <div className="container flex flex-col gap-5 w-full lg:w-1/2">
@@ -256,12 +251,7 @@ function Employees() {
                       onChange={handleChange}
                       className="w-full lg:w-fit p-1 rounded-lg"
                     ></input>
-                    <button
-                      className="rounded-xl bg-sky-200 hover:bg-sky-300 p-1 pl-2 pr-2"
-                      onClick={handleSubmitDept}
-                    >
-                      Submit
-                    </button>
+                    <ButtonRounded text="Submit" handleClick={handleSubmitDept} />
                   </div>
                 </div>
 

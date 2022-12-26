@@ -70,27 +70,33 @@ function Navbar(props) {
             </div>
             <div class="hidden sm:ml-6 sm:block">
               <div class="flex space-x-4">
-                <a
-                  className={
-                    props.selectedMenu == 0 ? activeClass : inactiveClass
-                  }
-                >
-                  <Link to="/">Employees</Link>
-                </a>
-                <a
-                  className={
-                    props.selectedMenu == 1 ? activeClass : inactiveClass
-                  }
-                >
-                  <Link to="/products">Products</Link>
-                </a>
-                <a
-                  className={
-                    props.selectedMenu == 2 ? activeClass : inactiveClass
-                  }
-                >
-                  <Link to="/sales">Sales</Link>
-                </a>
+                <Link to="/">
+                  <a
+                    className={
+                      props.selectedMenu == 0 ? activeClass : inactiveClass
+                    }
+                  >
+                    Employees
+                  </a>
+                </Link>
+                <Link to="/products">
+                  <a
+                    className={
+                      props.selectedMenu == 1 ? activeClass : inactiveClass
+                    }
+                  >
+                    Products
+                  </a>
+                </Link>
+                <Link to="/sales">
+                  <a
+                    className={
+                      props.selectedMenu == 2 ? activeClass : inactiveClass
+                    }
+                  >
+                    Sales
+                  </a>
+                </Link>
               </div>
             </div>
           </div>

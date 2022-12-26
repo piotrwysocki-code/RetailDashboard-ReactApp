@@ -4,6 +4,7 @@ import SearchGrid from "../components/SearchGrid";
 import axios from "axios";
 import Navbar from "../components/Navbar";
 import { FiSearch } from "react-icons/fi";
+import ButtonRounded from "../components/ButtonRounded";
 
 function Sales() {
   const { sales, salesProducts, refreshSales, refreshSalesProducts } =
@@ -186,12 +187,10 @@ function Sales() {
                   ></input>
                 </form>
                 <div className="flex flex-col justify-end gap-5 lg:flex-row content-centerd m-3">
-                  <button
-                    className="rounded-xl bg-sky-200 hover:bg-sky-300 p-1 pl-2 pr-2 mt-2"
-                    onClick={handleSubmitSale}
-                  >
-                    Submit
-                  </button>
+                  <ButtonRounded
+                      text="Submit"
+                      handleClick={handleSubmitSale}
+                    />
                 </div>
               </div>
               <div className="container text-start p-5 bg-slate-100 rounded-xl drop-shadow-md flex flex-col xl:w-1/2">
@@ -222,12 +221,10 @@ function Sales() {
                   </form>
                 </div>
                 <div className="flex flex-col justify-end gap-5 lg:flex-row content-centerd m-3">
-                  <button
-                    className="rounded-xl bg-sky-200 hover:bg-sky-300 p-1 pl-2 pr-2 mt-5 lg:w-fit"
-                    onClick={handleSubmitSalesProd}
-                  >
-                    Submit
-                  </button>
+                  <ButtonRounded
+                      text="Submit"
+                      handleClick={handleSubmitSalesProd}
+                    />
                 </div>
               </div>
               <div className="container flex flex-col gap-5 w-full xl:w-1/2">

@@ -14,18 +14,18 @@ function SearchGrid(props) {
   let [newItem, setNewItem] = useState({});
 
   useEffect(() => {
-    console.log(editVal);
+    /*console.log(editVal);
     console.log("edit item", editItem);
     console.log("new item", newItem);
-    console.log(editKey);
+    console.log(editKey);*/
   }, [editVal]);
 
   useEffect(() => {
-    console.log(selected);
+   /* console.log(selected);*/
   }, [selected]);
 
   let deleteBtnClicked = async () => {
-    console.log("Sending selected items: ", selected);
+    /*console.log("Sending selected items: ", selected);*/
     axios({
       url: `https://us-central1-dashboard-api-c543e.cloudfunctions.net/app/delete_${props.urlSuffix}`,
       method: "delete",
@@ -33,7 +33,7 @@ function SearchGrid(props) {
     })
       .then(
         await ((response) => {
-          console.log(response);
+         /* console.log(response);*/
 
           setEditKey([]);
           setEditItem({});
@@ -43,11 +43,11 @@ function SearchGrid(props) {
           
           refreshData();
 
-          console.log("refreshing...");
+          /*console.log("refreshing...");*/
         })
       )
       .catch((error) => {
-        console.log(error);
+        /*console.log(error);*/
       });
   };
 
@@ -77,9 +77,9 @@ function SearchGrid(props) {
   };
 
   let handleInputBlur = async (e) => {
-    console.log(editItem);
+   /* console.log(editItem);
 
-    console.log(newItem);
+    console.log(newItem);*/
 
     axios({
       url: `https://us-central1-dashboard-api-c543e.cloudfunctions.net/app/update_${props.urlSuffix}`,
@@ -88,7 +88,7 @@ function SearchGrid(props) {
     })
       .then(
         await ((response) => {
-          console.log(response);
+         /* console.log(response);*/
 
           setEditKey([]);
           setEditItem({});
@@ -99,7 +99,7 @@ function SearchGrid(props) {
         })
       )
       .catch((error) => {
-        console.log(error);
+       /* console.log(error);*/
       });
   };
 

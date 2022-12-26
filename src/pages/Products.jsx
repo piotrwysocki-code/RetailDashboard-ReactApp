@@ -4,6 +4,7 @@ import SearchGrid from "../components/SearchGrid";
 import axios from "axios";
 import Navbar from "../components/Navbar";
 import { FiSearch } from "react-icons/fi";
+import ButtonRounded from "../components/ButtonRounded";
 
 function Products() {
   const { products, categories, refreshProducts, refreshCategories } =
@@ -195,12 +196,10 @@ function Products() {
                   </select>
                 </form>
                 <div className="flex flex-col justify-end gap-5 lg:flex-row content-centerd m-3">
-                  <button
-                    className="rounded-xl bg-sky-200 hover:bg-sky-300 p-1 pl-2 pr-2"
-                    onClick={handleSubmitProduct}
-                  >
-                    Submit
-                  </button>
+                  <ButtonRounded
+                    text="Submit"
+                    handleClick={handleSubmitProduct}
+                  />
                 </div>
               </div>
               <div className="container flex flex-col gap-5 w-full lg:w-1/2">
@@ -214,12 +213,10 @@ function Products() {
                       onChange={handleChange}
                       className="w-full lg:w-fit p-1 rounded-lg"
                     ></input>
-                    <button
-                      className="rounded-xl bg-sky-200 hover:bg-sky-300 p-1 pl-2 pr-2 mt-3 lg:mt-0"
-                      onClick={handleSubmitCategory}
-                    >
-                      Submit
-                    </button>
+                    <ButtonRounded
+                      text="Submit"
+                      handleClick={handleSubmitCategory}
+                    />
                   </div>
                 </div>
 
